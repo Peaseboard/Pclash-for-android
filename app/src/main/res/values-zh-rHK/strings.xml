@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="launch_name">Clash</string>
-    <string name="application_name">Clash for Android</string>
+    <string name="launch_name">Pclash</string>
+    <string name="application_name">Pclash</string>
     <string name="stopped">已停止</string>
     <string name="tap_to_start">點此啟動</string>
     <string name="running">運行中</string>
@@ -118,13 +118,13 @@
     <string name="search">查找</string>
     <string name="sources">源代碼</string>
     <string name="clash">Clash</string>
-    <string name="clash_for_android">Clash for Android</string>
+    <string name="clash_for_android">Pclash</string>
     <string name="feedback">反饋</string>
     <string name="donate">捐贈</string>
     <string name="github_issues">Github Issues</string>
     <string name="telegram_channel">Telegram 頻道</string>
     <string name="tips_profile"><![CDATA[僅接受 <strong>Clash 配置文件</strong> <br />其中包含了 <strong>代理, 代理組 和 規則</strong>]]></string>
-    <string name="tips_support"><![CDATA[Clash for Android 是一個<strong>免費開源</strong>的項目<br /> 我們<strong>不提供</strong>任何代理服務<br />請務必<strong>不要</strong>反饋非應用自身引起的問題]]></string>
+    <string name="tips_support"><![CDATA[Pclash 是一個<strong>免費開源</strong>的項目<br /> 我們<strong>不提供</strong>任何代理服務<br />請務必<strong>不要</strong>反饋非應用自身引起的問題]]></string>
     <string name="application_broken_description"><![CDATA[這通常意味着您使用來自 <strong>Google Play</strong> 的副本, 但是生成該副本的應用未能正確處理 <strong>分包機制</strong><br />這意味着您獲取的是 <strong>應用的一部分</strong>]]></string>
     <string name="learn_more_about_split_apks">瞭解更多關於分包機制</string>
     <string name="reinstall_from_google_play">重新從 Google Play 安裝</string>

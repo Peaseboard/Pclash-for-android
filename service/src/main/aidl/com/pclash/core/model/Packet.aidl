@@ -1,4 +1,4 @@
-package com.github.kr328.clash.core.model;
+package com.pclash.core.model;
 
 parcelable ProxyGroupWrapper;
 parcelable General;

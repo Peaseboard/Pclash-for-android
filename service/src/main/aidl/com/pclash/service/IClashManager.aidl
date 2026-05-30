@@ -1,7 +1,7 @@
-package com.github.kr328.clash.service;
+package com.pclash.service;
 
-import com.github.kr328.clash.service.transact.IStreamCallback;
-import com.github.kr328.clash.core.model.Packet;
+import com.pclash.service.transact.IStreamCallback;
+import com.pclash.core.model.Packet;
 
 interface IClashManager {
     // Control

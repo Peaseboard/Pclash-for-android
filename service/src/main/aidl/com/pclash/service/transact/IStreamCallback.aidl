@@ -1,6 +1,6 @@
-package com.github.kr328.clash.service.transact;
+package com.pclash.service.transact;
 
-import com.github.kr328.clash.service.transact.ParcelableContainer;
+import com.pclash.service.transact.ParcelableContainer;
 
 interface IStreamCallback {
     void send(in ParcelableContainer data);

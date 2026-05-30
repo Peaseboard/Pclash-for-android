@@ -1,7 +1,7 @@
-package com.github.kr328.clash.service;
+package com.pclash.service;
 
-import com.github.kr328.clash.service.transact.IStreamCallback;
-import com.github.kr328.clash.service.model.Profile;
+import com.pclash.service.transact.IStreamCallback;
+import com.pclash.service.model.Profile;
 
 interface IProfileService {
     long acquireUnused(String type, String source);
