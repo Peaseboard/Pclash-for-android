@@ -29,7 +29,7 @@ static std::pair<jobject, uint64_t> completableFutureWithToken(Master::Context *
 
 extern "C"
 JNIEXPORT jobject JNICALL
-Java_com_github_kr328_clash_core_bridge_Bridge_downloadProfile__ILjava_lang_String_2Ljava_lang_String_2(
+Java_com_pclash_core_core_bridge_Bridge_downloadProfile__ILjava_lang_String_2Ljava_lang_String_2(
         JNIEnv *env, jclass clazz, jint fd, jstring base, jstring output) {
     UNUSED(clazz);
 
@@ -50,7 +50,7 @@ Java_com_github_kr328_clash_core_bridge_Bridge_downloadProfile__ILjava_lang_Stri
 
 extern "C"
 JNIEXPORT jobject JNICALL
-Java_com_github_kr328_clash_core_bridge_Bridge_downloadProfile__Ljava_lang_String_2Ljava_lang_String_2Ljava_lang_String_2(
+Java_com_pclash_core_core_bridge_Bridge_downloadProfile__Ljava_lang_String_2Ljava_lang_String_2Ljava_lang_String_2(
         JNIEnv *env, jclass clazz, jstring url, jstring base, jstring output) {
     UNUSED(clazz);
 
@@ -73,7 +73,7 @@ Java_com_github_kr328_clash_core_bridge_Bridge_downloadProfile__Ljava_lang_Strin
 
 extern "C"
 JNIEXPORT jobject JNICALL
-Java_com_github_kr328_clash_core_bridge_Bridge_loadProfile(JNIEnv *env, jclass clazz, jstring path,
+Java_com_pclash_core_core_bridge_Bridge_loadProfile(JNIEnv *env, jclass clazz, jstring path,
                                                            jstring base) {
     UNUSED(clazz);
 
@@ -94,7 +94,7 @@ Java_com_github_kr328_clash_core_bridge_Bridge_loadProfile(JNIEnv *env, jclass c
 
 extern "C"
 JNIEXPORT jobject JNICALL
-Java_com_github_kr328_clash_core_bridge_Bridge_performHealthCheck(JNIEnv *env, jclass clazz,
+Java_com_pclash_core_core_bridge_Bridge_performHealthCheck(JNIEnv *env, jclass clazz,
                                                                   jstring group) {
     UNUSED(clazz);
 

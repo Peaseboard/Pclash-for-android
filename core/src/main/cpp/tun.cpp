@@ -4,7 +4,7 @@
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_github_kr328_clash_core_bridge_Bridge_startTunDevice(JNIEnv *env, jclass clazz, jint fd,
+Java_com_pclash_core_core_bridge_Bridge_startTunDevice(JNIEnv *env, jclass clazz, jint fd,
                                                               jint mtu, jstring gateway,
                                                               jstring mirror, jstring dns,
                                                               jobject callback) {
@@ -60,6 +60,6 @@ Java_com_github_kr328_clash_core_bridge_Bridge_startTunDevice(JNIEnv *env, jclas
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_github_kr328_clash_core_bridge_Bridge_stopTunDevice(JNIEnv *env, jclass clazz) {
+Java_com_pclash_core_core_bridge_Bridge_stopTunDevice(JNIEnv *env, jclass clazz) {
     stopTunDevice();
 }

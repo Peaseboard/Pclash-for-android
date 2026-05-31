@@ -7,7 +7,7 @@ plugins {
     id("kotlinx-serialization")
 }
 
-apply(from = "clash.gradle.kts")
+apply(from = "mihomo.gradle.kts")
 
 val gCompileSdkVersion: String by project
 val gBuildToolsVersion: String by project

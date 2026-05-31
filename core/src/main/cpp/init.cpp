@@ -2,7 +2,7 @@
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_github_kr328_clash_core_bridge_Bridge_initialize(JNIEnv *env, jclass clazz,
+Java_com_pclash_core_core_bridge_Bridge_initialize(JNIEnv *env, jclass clazz,
                                                           jbyteArray database, jstring home,
                                                           jstring version) {
     UNUSED(clazz);
@@ -22,7 +22,7 @@ Java_com_github_kr328_clash_core_bridge_Bridge_initialize(JNIEnv *env, jclass cl
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_github_kr328_clash_core_bridge_Bridge_reset(JNIEnv *env, jclass clazz) {
+Java_com_pclash_core_core_bridge_Bridge_reset(JNIEnv *env, jclass clazz) {
     UNUSED(env);
     UNUSED(clazz);
 

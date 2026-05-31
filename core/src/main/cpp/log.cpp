@@ -5,7 +5,7 @@ static jobject logCallback;
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_github_kr328_clash_core_bridge_Bridge_setLogCallback(JNIEnv *env, jclass clazz,
+Java_com_pclash_core_core_bridge_Bridge_setLogCallback(JNIEnv *env, jclass clazz,
                                                               jobject callback) {
     UNUSED(clazz);
 
@@ -34,7 +34,7 @@ Java_com_github_kr328_clash_core_bridge_Bridge_setLogCallback(JNIEnv *env, jclas
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_github_kr328_clash_core_bridge_Bridge_enableLogReport(JNIEnv *env, jclass clazz) {
+Java_com_pclash_core_core_bridge_Bridge_enableLogReport(JNIEnv *env, jclass clazz) {
     UNUSED(env);
     UNUSED(clazz);
 
@@ -43,7 +43,7 @@ Java_com_github_kr328_clash_core_bridge_Bridge_enableLogReport(JNIEnv *env, jcla
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_github_kr328_clash_core_bridge_Bridge_disableLogReport(JNIEnv *env, jclass clazz) {
+Java_com_pclash_core_core_bridge_Bridge_disableLogReport(JNIEnv *env, jclass clazz) {
     UNUSED(env);
     UNUSED(clazz);
 

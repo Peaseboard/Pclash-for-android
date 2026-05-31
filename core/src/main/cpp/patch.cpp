@@ -4,7 +4,7 @@
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_github_kr328_clash_core_bridge_Bridge_setProxyMode(JNIEnv *env, jclass clazz,
+Java_com_pclash_core_core_bridge_Bridge_setProxyMode(JNIEnv *env, jclass clazz,
                                                             jstring proxy_mode) {
     Master::runWithContext<void>(env, [&](Master::Context *context) {
         const char *m = context->getString(proxy_mode);
@@ -27,7 +27,7 @@ Java_com_github_kr328_clash_core_bridge_Bridge_setProxyMode(JNIEnv *env, jclass 
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_github_kr328_clash_core_bridge_Bridge_setDnsOverride(JNIEnv *env, jclass clazz,
+Java_com_pclash_core_core_bridge_Bridge_setDnsOverride(JNIEnv *env, jclass clazz,
                                                               jboolean override_dns,
                                                               jstring append_dns) {
     Master::runWithContext<void>(env, [&](Master::Context *context) {
@@ -52,7 +52,7 @@ Java_com_github_kr328_clash_core_bridge_Bridge_setDnsOverride(JNIEnv *env, jclas
 
 extern "C"
 JNIEXPORT jboolean JNICALL
-Java_com_github_kr328_clash_core_bridge_Bridge_setSelector(JNIEnv *env, jclass clazz, jstring group,
+Java_com_pclash_core_core_bridge_Bridge_setSelector(JNIEnv *env, jclass clazz, jstring group,
                                                            jstring selected) {
     UNUSED(clazz);
 

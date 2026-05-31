@@ -34,7 +34,7 @@ task("downloadMihomoCore") {
 
         mapping.forEach { (abi, fileName) ->
             val libDir = jniLibsDir.resolve(abi)
-            val outputFile = libDir.resolve("libclash.so")
+            val outputFile = libDir.resolve("libmihomo.so")
             val gzFile = buildDir.resolve("downloads/$fileName")
             
             if (outputFile.exists()) return@forEach

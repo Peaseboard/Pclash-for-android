@@ -2,7 +2,7 @@
 
 extern "C"
 JNIEXPORT jobject JNICALL
-Java_com_github_kr328_clash_core_bridge_Bridge_queryGeneral(JNIEnv *env, jclass clazz) {
+Java_com_pclash_core_core_bridge_Bridge_queryGeneral(JNIEnv *env, jclass clazz) {
     UNUSED(clazz);
 
     return Master::runWithContext<jobject>(env, [&](Master::Context *context) -> jobject {
@@ -35,7 +35,7 @@ Java_com_github_kr328_clash_core_bridge_Bridge_queryGeneral(JNIEnv *env, jclass 
 
 extern "C"
 JNIEXPORT jobject JNICALL
-Java_com_github_kr328_clash_core_bridge_Bridge_queryBandwidth(JNIEnv *env, jclass clazz) {
+Java_com_pclash_core_core_bridge_Bridge_queryBandwidth(JNIEnv *env, jclass clazz) {
     UNUSED(clazz);
 
     return Master::runWithContext<jobject>(env, [&](Master::Context *context) -> jobject {
@@ -49,7 +49,7 @@ Java_com_github_kr328_clash_core_bridge_Bridge_queryBandwidth(JNIEnv *env, jclas
 
 extern "C"
 JNIEXPORT jobject JNICALL
-Java_com_github_kr328_clash_core_bridge_Bridge_querySpeed(JNIEnv *env, jclass clazz) {
+Java_com_pclash_core_core_bridge_Bridge_querySpeed(JNIEnv *env, jclass clazz) {
     UNUSED(clazz);
 
     return Master::runWithContext<jobject>(env, [&](Master::Context *context) -> jobject {
@@ -63,7 +63,7 @@ Java_com_github_kr328_clash_core_bridge_Bridge_querySpeed(JNIEnv *env, jclass cl
 
 extern "C"
 JNIEXPORT jobjectArray JNICALL
-Java_com_github_kr328_clash_core_bridge_Bridge_queryProxyGroups(JNIEnv *env, jclass clazz) {
+Java_com_pclash_core_core_bridge_Bridge_queryProxyGroups(JNIEnv *env, jclass clazz) {
     UNUSED(clazz);
 
     return Master::runWithContext<jobjectArray>(env, [&](Master::Context *context) -> jobjectArray {
