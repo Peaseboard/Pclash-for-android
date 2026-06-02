@@ -1,49 +1,41 @@
-import android.databinding.tool.ext.toCamelCase
-
 plugins {
     id("com.android.library")
-    id("kotlin-android")
-    id("kotlin-android-extensions")
-    id("kotlinx-serialization")
+    id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.plugin.serialization")
 }
 
-apply(from = "mihomo.gradle.kts")
-
-val gCompileSdkVersion: String by project
-val gBuildToolsVersion: String by project
-
-val gMinSdkVersion: String by project
-val gTargetSdkVersion: String by project
-
-val gVersionCode: String by project
+val gCompileSdkVersion: Int by project
+val gMinSdkVersion: Int by project
+val gTargetSdkVersion: Int by project
+val gVersionCode: Int by project
 val gVersionName: String by project
-
 val gKotlinVersion: String by project
 val gKotlinCoroutineVersion: String by project
 val gKotlinSerializationVersion: String by project
 val gAndroidKtxVersion: String by project
 
-val geoipOutput = buildDir.resolve("outputs/geoip")
+val geoipOutput = layout.buildDirectory.dir("outputs/geoip").get().asFile
 val jniLibsDir = file("src/main/jniLibs")
 
 android {
-    compileSdkVersion(gCompileSdkVersion)
-    buildToolsVersion(gBuildToolsVersion)
+    namespace = "com.pclash.core"
+    compileSdk = gCompileSdkVersion
 
     defaultConfig {
-        minSdkVersion(gMinSdkVersion)
-        targetSdkVersion(gTargetSdkVersion)
-
-        versionCode = gVersionCode.toInt()
+        minSdk = gMinSdkVersion
+        targetSdk = gTargetSdkVersion
+        versionCode = gVersionCode
         versionName = gVersionName
-
         consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
-        named("release") {
+        release {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
 
@@ -55,32 +47,29 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
 }
 
 dependencies {
     implementation(project(":common"))
     implementation("androidx.core:core-ktx:$gAndroidKtxVersion")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$gKotlinVersion")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:$gKotlinVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$gKotlinCoroutineVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:$gKotlinSerializationVersion")
-}
-
-repositories {
-    mavenCentral()
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$gKotlinSerializationVersion")
 }
 
 afterEvaluate {
     android.buildTypes.forEach {
-        val cName = it.name.toCamelCase()
-
-        tasks["package${cName}Assets"].dependsOn(tasks["downloadMihomoCore"])
-        tasks["package${cName}Assets"].dependsOn(tasks["downloadGeoipDatabase"])
+        val cName = it.name.replaceFirstChar { if (it.isLowerCase()) it.titlecase(java.util.Locale.getDefault()) else it.toString() }
+        tasks.named("package${cName}Assets").configure {
+            dependsOn(tasks.named("downloadMihomoCore"))
+            dependsOn(tasks.named("downloadGeoipDatabase"))
+        }
     }
 }

@@ -11,11 +11,11 @@ import androidx.appcompat.app.AlertDialog
 import com.pclash.common.utils.intent
 import com.pclash.common.utils.asBytesString
 import com.pclash.core.model.General
+import com.pclash.databinding.ActivityMainBinding
 import com.pclash.remote.withClash
 import com.pclash.remote.withProfile
 import com.pclash.service.util.startClashService
 import com.pclash.service.util.stopClashService
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
 
 class MainActivity : BaseActivity() {
@@ -23,14 +23,15 @@ class MainActivity : BaseActivity() {
         private const val REQUEST_CODE = 40000
     }
 
+    private lateinit var binding: ActivityMainBinding
     private var bandwidthJob: Job? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        setContentView(R.layout.activity_main)
-
-        status.setOnClickListener {
+        binding.status.setOnClickListener {
             if (clashRunning) {
                 stopClashService()
             } else {
@@ -46,40 +47,38 @@ class MainActivity : BaseActivity() {
             }
         }
 
-        proxies.setOnClickListener {
+        binding.proxies.setOnClickListener {
             startActivity(ProxiesActivity::class.intent)
         }
 
-        profiles.setOnClickListener {
+        binding.profiles.setOnClickListener {
             startActivity(ProfilesActivity::class.intent)
         }
 
-        logs.setOnClickListener {
+        binding.logs.setOnClickListener {
             startActivity(LogsActivity::class.intent)
         }
 
-        settings.setOnClickListener {
+        binding.settings.setOnClickListener {
             startActivity(SettingsActivity::class.intent)
         }
 
-        support.setOnClickListener {
+        binding.support.setOnClickListener {
             startActivity(SupportActivity::class.intent)
         }
 
-        about.setOnClickListener {
+        binding.about.setOnClickListener {
             showAboutDialog()
         }
     }
 
     override fun onStart() {
         super.onStart()
-
         updateClashStatus()
     }
 
     override fun onStop() {
         super.onStop()
-
         stopBandwidthPolling()
     }
 
@@ -89,7 +88,6 @@ class MainActivity : BaseActivity() {
                 startClashService()
             return
         }
-
         super.onActivityResult(requestCode, resultCode, data)
     }
 
@@ -99,7 +97,6 @@ class MainActivity : BaseActivity() {
 
     override suspend fun onClashStopped(reason: String?) {
         updateClashStatus()
-
         if (reason != null)
             showSnackbarException(getString(R.string.clash_start_failure), reason)
     }
@@ -117,7 +114,7 @@ class MainActivity : BaseActivity() {
                 try {
                     while (clashRunning && isActive) {
                         val bandwidth = queryBandwidth()
-                        status.summary = getString(
+                        binding.status.summary = getString(
                             R.string.format_traffic_forwarded,
                             bandwidth.asBytesString()
                         )
@@ -138,20 +135,20 @@ class MainActivity : BaseActivity() {
         if (clashRunning) {
             startBandwidthPolling()
 
-            status.setCardBackgroundColor(getColor(R.color.primaryCardColorStarted))
-            status.icon = getDrawable(R.drawable.ic_started)
-            status.title = getText(R.string.running)
+            binding.status.setCardBackgroundColor(getColor(R.color.primaryCardColorStarted))
+            binding.status.icon = getDrawable(R.drawable.ic_started)
+            binding.status.title = getText(R.string.running)
 
-            proxies.visibility = View.VISIBLE
+            binding.proxies.visibility = View.VISIBLE
         } else {
             stopBandwidthPolling()
 
-            status.setCardBackgroundColor(getColor(R.color.primaryCardColorStopped))
-            status.icon = getDrawable(R.drawable.ic_stopped)
-            status.title = getText(R.string.stopped)
-            status.summary = getText(R.string.tap_to_start)
+            binding.status.setCardBackgroundColor(getColor(R.color.primaryCardColorStopped))
+            binding.status.icon = getDrawable(R.drawable.ic_stopped)
+            binding.status.title = getText(R.string.stopped)
+            binding.status.summary = getText(R.string.tap_to_start)
 
-            proxies.visibility = View.GONE
+            binding.proxies.visibility = View.GONE
         }
 
         launch {
@@ -174,8 +171,8 @@ class MainActivity : BaseActivity() {
                 else
                     getString(R.string.format_profile_activated, active.name)
 
-            proxies.summary = getText(modeResId)
-            profiles.summary = profileString
+            binding.proxies.summary = getText(modeResId)
+            binding.profiles.summary = profileString
         }
     }
 
@@ -185,7 +182,7 @@ class MainActivity : BaseActivity() {
                 val packageInfo = packageManager.getPackageInfo(packageName, 0)
 
                 LayoutInflater.from(this@MainActivity)
-                    .inflate(R.layout.dialog_abort, rootView as ViewGroup?, false).apply {
+                    .inflate(R.layout.dialog_abort, binding.root as ViewGroup?, false).apply {
                         findViewById<View>(android.R.id.icon).background =
                             getDrawable(R.drawable.ic_logo)
                         findViewById<TextView>(android.R.id.title).text =

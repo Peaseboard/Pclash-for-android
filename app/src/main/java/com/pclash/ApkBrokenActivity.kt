@@ -4,21 +4,23 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.text.Html
-import kotlinx.android.synthetic.main.activity_application_broken.*
+import com.pclash.databinding.ActivityApplicationBrokenBinding
 
 class ApkBrokenActivity : BaseActivity() {
+    private lateinit var binding: ActivityApplicationBrokenBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityApplicationBrokenBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
 
-        setContentView(R.layout.activity_application_broken)
-        setSupportActionBar(toolbar)
-
-        text.text = Html.fromHtml(
+        binding.text.text = Html.fromHtml(
             getString(R.string.application_broken_description),
             Html.FROM_HTML_MODE_COMPACT
         )
 
-        commonUi.build {
+        binding.commonUi.build {
             option(
                 icon = getDrawable(R.drawable.ic_info),
                 title = getString(R.string.learn_more_about_split_apks)
@@ -57,12 +59,9 @@ class ApkBrokenActivity : BaseActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-
         finishAffinity()
         finish()
     }
 
-    override fun shouldDisplayHomeAsUpEnabled(): Boolean {
-        return false
-    }
+    override fun shouldDisplayHomeAsUpEnabled(): Boolean = false
 }

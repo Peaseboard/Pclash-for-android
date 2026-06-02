@@ -8,17 +8,18 @@ import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pclash.adapter.PackagesAdapter
+import com.pclash.databinding.ActivityAccessControlPackagesBinding
 import com.pclash.service.settings.ServiceSettings
-import kotlinx.android.synthetic.main.activity_access_control_packages.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlin.streams.toList
 
 class PackagesActivity : BaseActivity() {
+    private lateinit var binding: ActivityAccessControlPackagesBinding
     private val activity: PackagesActivity
         get() = this
     private val adapter: PackagesAdapter?
-        get() = mainList.adapter as PackagesAdapter?
+        get() = binding.mainList.adapter as PackagesAdapter?
     private val refreshChannel = Channel<Unit>(Channel.CONFLATED)
 
     private var keyword: String = ""
@@ -28,16 +29,15 @@ class PackagesActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        setContentView(R.layout.activity_access_control_packages)
-        setSupportActionBar(toolbar)
+        binding = ActivityAccessControlPackagesBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
 
         launch {
             val appsDeferred = async {
                 withContext(Dispatchers.IO) {
                     val pm = packageManager
                     val packages = pm.getInstalledPackages(0)
-
                     packages.parallelStream()
                         .map {
                             PackagesAdapter.AppInfo(
@@ -62,22 +62,18 @@ class PackagesActivity : BaseActivity() {
             val selected = selectedDeferred.await()
 
             val adapter = PackagesAdapter(activity, apps)
-
-            mainList.adapter = adapter
-            mainList.layoutManager = LinearLayoutManager(activity)
+            binding.mainList.adapter = adapter
+            binding.mainList.layoutManager = LinearLayoutManager(activity)
 
             adapter.selectedPackages.addAll(selected)
+            binding.progress.visibility = View.GONE
 
-            progress.visibility = View.GONE
-
-            refreshChannel.offer(Unit)
+            refreshChannel.trySend(Unit)
 
             while (isActive) {
                 refreshChannel.receive()
-
                 adapter.applyFilter(keyword, sort, decrease, systemApp)
-                mainList.scrollToPosition(0)
-
+                binding.mainList.scrollToPosition(0)
                 delay(200)
             }
         }
@@ -88,23 +84,18 @@ class PackagesActivity : BaseActivity() {
             return false
 
         menuInflater.inflate(R.menu.packages, menu)
-
         menu?.apply {
             (findItem(R.id.search).actionView as SearchView).apply {
                 setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                     override fun onQueryTextSubmit(query: String?) = false
-
                     override fun onQueryTextChange(newText: String?): Boolean {
                         keyword = newText ?: ""
-
-                        refreshChannel.offer(Unit)
-
+                        refreshChannel.trySend(Unit)
                         return true
                     }
                 })
             }
         }
-
         return true
     }
 
@@ -113,49 +104,21 @@ class PackagesActivity : BaseActivity() {
             return true
 
         when (item.itemId) {
-            R.id.systemApps -> {
-                item.isChecked = !item.isChecked
-
-                systemApp = item.isChecked
-            }
-            R.id.sortReverse -> {
-                item.isChecked = !item.isChecked
-
-                decrease = item.isChecked
-            }
-            R.id.sortName -> {
-                item.isChecked = true
-
-                sort = PackagesAdapter.Sort.NAME
-            }
-            R.id.sortPackageName -> {
-                item.isChecked = true
-
-                sort = PackagesAdapter.Sort.PACKAGE
-            }
-            R.id.sortUpdateTime -> {
-                item.isChecked = true
-
-                sort = PackagesAdapter.Sort.UPDATE_TIME
-            }
-            R.id.sortInstallTime -> {
-                item.isChecked = true
-
-                sort = PackagesAdapter.Sort.INSTALL_TIME
-            }
+            R.id.systemApps -> { item.isChecked = !item.isChecked; systemApp = item.isChecked }
+            R.id.sortReverse -> { item.isChecked = !item.isChecked; decrease = item.isChecked }
+            R.id.sortName -> { item.isChecked = true; sort = PackagesAdapter.Sort.NAME }
+            R.id.sortPackageName -> { item.isChecked = true; sort = PackagesAdapter.Sort.PACKAGE }
+            R.id.sortUpdateTime -> { item.isChecked = true; sort = PackagesAdapter.Sort.UPDATE_TIME }
+            R.id.sortInstallTime -> { item.isChecked = true; sort = PackagesAdapter.Sort.INSTALL_TIME }
             else -> return false
         }
-
-        refreshChannel.offer(Unit)
-
+        refreshChannel.trySend(Unit)
         return true
     }
 
     override fun onStop() {
         super.onStop()
-
         val packageList = adapter?.selectedPackages ?: return
-
         GlobalScope.launch {
             withContext(Dispatchers.IO) {
                 ServiceSettings(activity).commit {

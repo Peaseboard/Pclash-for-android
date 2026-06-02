@@ -6,13 +6,13 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pclash.adapter.ProfileAdapter
 import com.pclash.common.utils.intent
+import com.pclash.databinding.ActivityProfilesBinding
 import com.pclash.remote.withProfile
 import com.pclash.service.ProfileReceiver
 import com.pclash.service.model.Profile
 import com.pclash.service.util.sendBroadcastSelf
 import com.pclash.weight.ProfilesMenu
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_profiles.*
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
@@ -26,37 +26,35 @@ class ProfilesActivity : BaseActivity(), ProfileAdapter.Callback, ProfilesMenu.C
         private const val EDITOR_REQUEST_CODE = 30000
     }
 
+    private lateinit var binding: ActivityProfilesBinding
     private var backgroundJob: Job? = null
     private val reloadMutex = Mutex()
     private val editorStack = Stack<Profile>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_profiles)
-        setSupportActionBar(toolbar)
+        binding = ActivityProfilesBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
 
-        mainList.layoutManager = LinearLayoutManager(this)
-        mainList.adapter = ProfileAdapter(this, this)
+        binding.mainList.layoutManager = LinearLayoutManager(this)
+        binding.mainList.adapter = ProfileAdapter(this, this)
     }
 
     override fun onStart() {
         super.onStart()
-
         backgroundJob = launch {
             reloadProfiles()
-
             while (isActive) {
                 delay(1000 * 60)
-
                 // Refresh without animation
-                (mainList.adapter as ProfileAdapter).notifyDataSetChanged()
+                (binding.mainList.adapter as ProfileAdapter).notifyDataSetChanged()
             }
         }
     }
 
     override fun onStop() {
         super.onStop()
-
         backgroundJob?.cancel()
         backgroundJob = null
     }
@@ -65,16 +63,13 @@ class ProfilesActivity : BaseActivity(), ProfileAdapter.Callback, ProfilesMenu.C
         if (requestCode == EDITOR_REQUEST_CODE) {
             launch {
                 val profile = editorStack.pop()
-
                 withProfile {
                     update(profile.id, profile)
                     startUpdate(profile.id)
                 }
             }
-
             return
         }
-
         super.onActivityResult(requestCode, resultCode, data)
     }
 
@@ -85,13 +80,10 @@ class ProfilesActivity : BaseActivity(), ProfileAdapter.Callback, ProfilesMenu.C
     private suspend fun reloadProfiles() {
         if (!reloadMutex.tryLock())
             return
-
         val profiles = withProfile {
             queryAll()
         }
-
-        (mainList.adapter as ProfileAdapter).setEntitiesAsync(profiles.toList())
-
+        (binding.mainList.adapter as ProfileAdapter).setEntitiesAsync(profiles.toList())
         reloadMutex.unlock()
     }
 
@@ -133,7 +125,7 @@ class ProfilesActivity : BaseActivity(), ProfileAdapter.Callback, ProfilesMenu.C
                 EDITOR_REQUEST_CODE
             )
         } catch (e: Exception) {
-            Snackbar.make(rootView, getText(R.string.profile_not_found), Snackbar.LENGTH_LONG)
+            Snackbar.make(binding.rootView, getText(R.string.profile_not_found), Snackbar.LENGTH_LONG)
                 .show()
         }
     }

@@ -14,9 +14,9 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.pclash.common.utils.intent
+import com.pclash.databinding.ActivityCreateProfileBinding
 import com.pclash.remote.withProfile
 import com.pclash.service.model.Profile.Type
-import kotlinx.android.synthetic.main.activity_create_profile.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -26,52 +26,44 @@ class CreateProfileActivity : BaseActivity() {
         const val REQUEST_CODE = 20000
     }
 
+    private lateinit var binding: ActivityCreateProfileBinding
     private val self = this
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityCreateProfileBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        setContentView(R.layout.activity_create_profile)
-
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolbar)
 
         launch {
             val providers = queryUrlProviders()
 
-            mainList.adapter = Adapter(this@CreateProfileActivity, providers)
-            mainList.divider = null
-            mainList.dividerHeight = 0
+            binding.mainList.adapter = Adapter(this@CreateProfileActivity, providers)
+            binding.mainList.divider = null
+            binding.mainList.dividerHeight = 0
 
-            mainList.setOnItemClickListener { _, _, position, _ ->
+            binding.mainList.setOnItemClickListener { _, _, position, _ ->
                 val item = providers[position]
-
                 self.launch {
                     val id = withProfile {
                         acquireUnused(item.type, item.intent?.toUri(0))
                     }
-
                     startActivityForResult(
                         ProfileEditActivity::class.intent.setData(
-                            Uri.fromParts(
-                                "id",
-                                id.toString(),
-                                null
-                            )
+                            Uri.fromParts("id", id.toString(), null)
                         ),
                         REQUEST_CODE
                     )
                 }
             }
-            mainList.setOnItemLongClickListener { _, _, position, _ ->
+            binding.mainList.setOnItemLongClickListener { _, _, position, _ ->
                 val item = providers[position]
                 val packageName = item.intent?.component?.packageName
-
                 if (packageName != null) {
                     val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
                         .setData(Uri.fromParts("package", packageName, null))
-
                     startActivity(intent)
-
                     true
                 } else {
                     false
@@ -83,7 +75,6 @@ class CreateProfileActivity : BaseActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK)
             return finish()
-
         super.onActivityResult(requestCode, resultCode, data)
     }
 
@@ -111,7 +102,6 @@ class CreateProfileActivity : BaseActivity() {
                 0
             ).map {
                 val activity = it.activityInfo
-
                 val name = activity.applicationInfo.loadLabel(packageManager)
                 val summary = activity.loadLabel(packageManager)
                 val icon = activity.loadIcon(packageManager)
@@ -123,7 +113,6 @@ class CreateProfileActivity : BaseActivity() {
                             activity.name
                         )
                     )
-
                 UrlProvider(name, summary, icon, type, intent)
             }
 
@@ -147,11 +136,9 @@ class CreateProfileActivity : BaseActivity() {
                 parent,
                 false
             )
-
             view.findViewById<TextView>(android.R.id.title).text = provider.name
             view.findViewById<TextView>(android.R.id.summary).text = provider.summary
             view.findViewById<View>(android.R.id.icon).background = provider.icon
-
             return view
         }
 

@@ -1,30 +1,20 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
-buildscript {
-    val gKotlinVersion: String by project
-
-    repositories {
-        google()
-        jcenter()
-    }
-    dependencies {
-        classpath("com.android.tools.build:gradle:4.0.0")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$gKotlinVersion")
-        classpath("org.jetbrains.kotlin:kotlin-serialization:$gKotlinVersion")
-    }
+plugins {
+    id("com.android.application") version "8.2.2" apply false
+    id("com.android.library") version "8.2.2" apply false
+    id("org.jetbrains.kotlin.android") version "1.9.22" apply false
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.9.22" apply false
+    id("org.jetbrains.kotlin.kapt") version "1.9.22" apply false
 }
 
 allprojects {
     repositories {
         google()
-        jcenter()
-
-        maven {
-            url = java.net.URI("https://dl.bintray.com/rikkaw/Libraries")
-        }
+        mavenCentral()
     }
 }
 
-task("clean", type = Delete::class) {
-    delete(rootProject.buildDir)
+tasks.register("clean", Delete::class) {
+    delete(rootProject.layout.buildDirectory)
 }

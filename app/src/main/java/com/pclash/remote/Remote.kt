@@ -21,7 +21,7 @@ import com.pclash.service.IClashManager
 import com.pclash.service.IProfileService
 import com.pclash.service.ProfileService
 import com.pclash.utils.ApplicationObserver
-import com.microsoft.appcenter.crashes.Crashes
+
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import java.io.File
@@ -211,7 +211,7 @@ object Remote {
                 false
             }
         } catch (e: Exception) {
-            Crashes.trackError(e)
+            Log.e("Remote", "Error during APK update check", e)
 
             false
         }

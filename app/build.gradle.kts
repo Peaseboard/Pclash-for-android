@@ -2,22 +2,17 @@ import java.util.*
 
 plugins {
     id("com.android.application")
-    id("kotlin-android")
-    id("kotlin-android-extensions")
+    id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.plugin.serialization")
 }
 
-val gCompileSdkVersion: String by project
-val gBuildToolsVersion: String by project
-
-val gMinSdkVersion: String by project
-val gTargetSdkVersion: String by project
-
-val gVersionCode: String by project
+val gCompileSdkVersion: Int by project
+val gMinSdkVersion: Int by project
+val gTargetSdkVersion: Int by project
+val gVersionCode: Int by project
 val gVersionName: String by project
-
 val gKotlinVersion: String by project
 val gKotlinCoroutineVersion: String by project
-val gAppCenterVersion: String by project
 val gAndroidKtxVersion: String by project
 val gRecyclerviewVersion: String by project
 val gAppCompatVersion: String by project
@@ -26,61 +21,79 @@ val gShizukuPreferenceVersion: String by project
 val gMultiprocessPreferenceVersion: String by project
 
 android {
-    compileSdkVersion(gCompileSdkVersion)
-    buildToolsVersion(gBuildToolsVersion)
+    namespace = "com.pclash"
+    compileSdk = gCompileSdkVersion
 
     defaultConfig {
         applicationId = "com.pclash"
-
-        minSdkVersion(gMinSdkVersion)
-        targetSdkVersion(gTargetSdkVersion)
-
-        versionCode = gVersionCode.toInt()
+        minSdk = gMinSdkVersion
+        targetSdk = gTargetSdkVersion
+        versionCode = gVersionCode
         versionName = gVersionName
     }
 
     buildTypes {
-        named("release") {
+        release {
             isMinifyEnabled = true
             isShrinkResources = true
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
+    }
+
+    buildFeatures {
+        viewBinding = true
     }
 
     splits {
         abi {
             isEnable = true
             isUniversalApk = true
+            reset()
+            include("armeabi-v7a", "arm64-v8a", "x86", "x86_64")
+        }
+    }
+
+    // For AAB (Google Play)
+    bundle {
+        language {
+            enableSplit = false
+        }
+        density {
+            enableSplit = false
+        }
+        abi {
+            enableSplit = true
         }
     }
 
     val signingFile = rootProject.file("keystore.properties")
-    if ( signingFile.exists() ) {
+    if (signingFile.exists()) {
         val properties = Properties().apply {
-            signingFile.inputStream().use {
-                load(it)
-            }
+            signingFile.inputStream().use { load(it) }
         }
         signingConfigs {
-            named("release") {
-                storeFile = rootProject.file(Objects.requireNonNull(properties.getProperty("storeFile")))
-                storePassword = Objects.requireNonNull(properties.getProperty("storePassword"))
-                keyAlias = Objects.requireNonNull(properties.getProperty("keyAlias"))
-                keyPassword = Objects.requireNonNull(properties.getProperty("keyPassword"))
+            create("release") {
+                storeFile = rootProject.file(properties.getProperty("storeFile"))
+                storePassword = properties.getProperty("storePassword")
+                keyAlias = properties.getProperty("keyAlias")
+                keyPassword = properties.getProperty("keyPassword")
             }
         }
         buildTypes {
-            named("release") {
-                this.signingConfig = signingConfigs.findByName("release")
+            release {
+                signingConfig = signingConfigs.getByName("release")
             }
         }
     }
@@ -91,7 +104,7 @@ dependencies {
     implementation(project(":service"))
     implementation(project(":design"))
     implementation(project(":common"))
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$gKotlinVersion")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:$gKotlinVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$gKotlinCoroutineVersion")
     implementation("androidx.recyclerview:recyclerview:$gRecyclerviewVersion")
     implementation("androidx.core:core-ktx:$gAndroidKtxVersion")
@@ -99,38 +112,18 @@ dependencies {
     implementation("com.google.android.material:material:$gMaterialDesignVersion")
     implementation("moe.shizuku.preference:preference-appcompat:$gShizukuPreferenceVersion")
     implementation("moe.shizuku.preference:preference-simplemenu-appcompat:$gShizukuPreferenceVersion")
-    implementation("com.microsoft.appcenter:appcenter-analytics:$gAppCenterVersion")
-    implementation("com.microsoft.appcenter:appcenter-crashes:$gAppCenterVersion")
 }
 
-task("injectAppCenterKey") {
+tasks.register("injectPackageNameBase64") {
     doFirst {
-        val properties = Properties().apply {
-            rootProject.file("local.properties").inputStream().use {
-                load(it)
-            }
-        }
-
-        val key = properties.getProperty("appcenter.key", "")
-
-        android.buildTypes.forEach {
-            it.buildConfigField("String", "APP_CENTER_KEY", "\"$key\"")
-        }
-    }
-}
-
-task("injectPackageNameBase64") {
-    doFirst {
-        val packageName = android.defaultConfig.applicationId ?: return@doFirst
-
+        val packageName = "com.pclash"
         val base64 = Base64.getEncoder().encodeToString(packageName.toByteArray(Charsets.UTF_8))
-
         android.buildTypes.forEach {
             it.buildConfigField("String", "PACKAGE_NAME_BASE64", "\"$base64\"")
         }
     }
 }
 
-afterEvaluate {
-    tasks["preBuild"].dependsOn(tasks["injectAppCenterKey"], tasks["injectPackageNameBase64"])
+tasks.named("preBuild") {
+    dependsOn("injectPackageNameBase64")
 }

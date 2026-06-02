@@ -4,35 +4,36 @@ import android.app.Activity
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import com.pclash.databinding.ActivityProfileEditBinding
 import com.pclash.fragment.ProfileEditFragment
 import com.pclash.remote.withProfile
 import com.pclash.service.model.Profile
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_profile_edit.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 class ProfileEditActivity : BaseActivity() {
+    private lateinit var binding: ActivityProfileEditBinding
     private var editor: ProfileEditFragment? = null
     private var processing = false
         set(value) {
             field = value
-
             if (value) {
-                saving.visibility = View.VISIBLE
-                save.visibility = View.INVISIBLE
+                binding.saving.visibility = View.VISIBLE
+                binding.save.visibility = View.INVISIBLE
             } else {
-                saving.visibility = View.INVISIBLE
-                save.visibility = View.VISIBLE
+                binding.saving.visibility = View.INVISIBLE
+                binding.save.visibility = View.VISIBLE
             }
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_profile_edit)
-        setSupportActionBar(toolbar)
+        binding = ActivityProfileEditBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
 
-        toolbar.setTitle(R.string.loading)
+        binding.toolbar.setTitle(R.string.loading)
 
         launch {
             val id = intent.data?.schemeSpecificPart?.toLongOrNull() ?: return@launch finish()
@@ -43,11 +44,11 @@ class ProfileEditActivity : BaseActivity() {
 
             when {
                 metadata.lastModified > 0 ->
-                    toolbar.setTitle(R.string.edit_profile)
+                    binding.toolbar.setTitle(R.string.edit_profile)
                 metadata.name.isBlank() ->
-                    toolbar.setTitle(R.string.new_profile)
+                    binding.toolbar.setTitle(R.string.new_profile)
                 else ->
-                    toolbar.setTitle(R.string.clone_profile)
+                    binding.toolbar.setTitle(R.string.clone_profile)
             }
 
             val fragment = ProfileEditFragment(
@@ -62,13 +63,13 @@ class ProfileEditActivity : BaseActivity() {
                 .replace(R.id.fragment, fragment)
                 .commit()
 
-            save.setOnClickListener {
+            binding.save.setOnClickListener {
                 val name = fragment.name
                 val uri = fragment.uri
                 val interval = fragment.interval
 
                 if (name.isBlank()) {
-                    Snackbar.make(rootView, R.string.empty_name, Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(binding.rootView, R.string.empty_name, Snackbar.LENGTH_LONG).show()
                     return@setOnClickListener
                 }
 
@@ -79,7 +80,6 @@ class ProfileEditActivity : BaseActivity() {
                 )
 
                 processing = true
-
                 commit(newMetadata)
             }
         }
@@ -87,11 +87,11 @@ class ProfileEditActivity : BaseActivity() {
 
     override fun onBackPressed() {
         if (processing) {
-            Snackbar.make(rootView, R.string.processing, Snackbar.LENGTH_LONG).show()
+            Snackbar.make(binding.rootView, R.string.processing, Snackbar.LENGTH_LONG).show()
             return
         }
 
-        if ( editor?.isModified != true)
+        if (editor?.isModified != true)
             return finish()
 
         AlertDialog.Builder(this)
@@ -106,11 +106,9 @@ class ProfileEditActivity : BaseActivity() {
         runBlocking {
             withProfile {
                 val id = editor?.id ?: return@withProfile
-
                 release(id)
             }
         }
-
         super.onDestroy()
     }
 
@@ -121,14 +119,11 @@ class ProfileEditActivity : BaseActivity() {
                     update(metadata.id, metadata)
                     commitAsync(metadata.id).await()
                 }
-
                 setResult(Activity.RESULT_OK)
-
                 finish()
             } catch (e: Exception) {
                 showSnackbarException(getString(R.string.download_failure), e.message)
             }
-
             processing = false
         }
     }

@@ -12,12 +12,13 @@ import com.pclash.adapter.LiveLogAdapter
 import com.pclash.adapter.LogAdapter
 import com.pclash.common.utils.intent
 import com.pclash.core.event.LogEvent
-import kotlinx.android.synthetic.main.activity_log_viewer.*
+import com.pclash.databinding.ActivityLogViewerBinding
 import kotlinx.coroutines.*
 import kotlinx.coroutines.sync.Mutex
 import java.io.File
 
 class LogViewerActivity : BaseActivity() {
+    private lateinit var binding: ActivityLogViewerBinding
     private val pauseMutex = Mutex()
     private val connection = object : ServiceConnection {
         override fun onServiceDisconnected(name: ComponentName?) {
@@ -27,17 +28,16 @@ class LogViewerActivity : BaseActivity() {
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             val logcat =
                 requireNotNull(service?.queryLocalInterface(LogcatService::class.java.name)) as LogcatService
-
             startLogcatPoll(logcat)
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityLogViewerBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        setContentView(R.layout.activity_log_viewer)
-
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolbar)
 
         val file = intent?.data
 
@@ -49,7 +49,6 @@ class LogViewerActivity : BaseActivity() {
 
     override fun onStop() {
         super.onStop()
-
         launch {
             pauseMutex.lock()
         }
@@ -57,7 +56,6 @@ class LogViewerActivity : BaseActivity() {
 
     override fun onStart() {
         super.onStart()
-
         launch {
             if (pauseMutex.isLocked)
                 pauseMutex.unlock()
@@ -65,12 +63,12 @@ class LogViewerActivity : BaseActivity() {
     }
 
     private fun startLiveMode() {
-        mainList.layoutManager = LinearLayoutManager(this)
-        mainList.adapter = LiveLogAdapter(this)
-        mainList.itemAnimator?.addDuration = 100
-        mainList.itemAnimator?.removeDuration = 100
+        binding.mainList.layoutManager = LinearLayoutManager(this)
+        binding.mainList.adapter = LiveLogAdapter(this)
+        binding.mainList.itemAnimator?.addDuration = 100
+        binding.mainList.itemAnimator?.removeDuration = 100
 
-        stop.setOnClickListener {
+        binding.stop.setOnClickListener {
             unbindService(connection)
             stopService(LogcatService::class.intent)
             finish()
@@ -80,7 +78,7 @@ class LogViewerActivity : BaseActivity() {
     }
 
     private fun startFileMode(file: File) {
-        stop.visibility = View.GONE
+        binding.stop.visibility = View.GONE
 
         launch {
             val items = withContext(Dispatchers.IO) {
@@ -96,14 +94,13 @@ class LogViewerActivity : BaseActivity() {
                     }
                 } catch (e: Exception) {
                     showSnackbarException(getString(R.string.open_log_failure), e.message)
-
                     throw CancellationException()
                 }
             }
 
-            mainList.layoutManager = LinearLayoutManager(this@LogViewerActivity)
-            mainList.adapter = LogAdapter(this@LogViewerActivity, items)
-            mainList.adapter!!.notifyItemRangeInserted(0, items.size)
+            binding.mainList.layoutManager = LinearLayoutManager(this@LogViewerActivity)
+            binding.mainList.adapter = LogAdapter(this@LogViewerActivity, items)
+            binding.mainList.adapter!!.notifyItemRangeInserted(0, items.size)
         }
     }
 
@@ -116,9 +113,9 @@ class LogViewerActivity : BaseActivity() {
 
                 val response = service.pollLogEvent(offset).await()
 
-                (mainList.adapter as LiveLogAdapter).insertItems(response.logs)
+                (binding.mainList.adapter as LiveLogAdapter).insertItems(response.logs)
 
-                mainList.apply {
+                binding.mainList.apply {
                     if (computeVerticalScrollOffset() < 30)
                         scrollToPosition(0)
                 }

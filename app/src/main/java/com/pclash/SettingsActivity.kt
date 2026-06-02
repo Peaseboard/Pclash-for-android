@@ -2,15 +2,18 @@ package com.pclash
 
 import android.os.Bundle
 import com.pclash.common.utils.intent
-import kotlinx.android.synthetic.main.activity_settings.*
+import com.pclash.databinding.ActivitySettingsBinding
 
 class SettingsActivity : BaseActivity() {
+    private lateinit var binding: ActivitySettingsBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_settings)
-        setSupportActionBar(toolbar)
+        binding = ActivitySettingsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
 
-        commonUi.build {
+        binding.commonUi.build {
             option(
                 icon = getDrawable(R.drawable.ic_settings_applications),
                 title = getString(R.string.behavior)
