@@ -111,6 +111,8 @@ dependencies {
     implementation("androidx.core:core-ktx:$gAndroidKtxVersion")
     implementation("androidx.appcompat:appcompat:$gAppCompatVersion")
     implementation("com.google.android.material:material:$gMaterialDesignVersion")
+
+    implementation("androidx.preference:preference-ktx:1.2.1")
 }
 
 tasks.register("injectPackageNameBase64") {
@@ -126,4 +128,3 @@ tasks.register("injectPackageNameBase64") {
 tasks.named("preBuild") {
     dependsOn("injectPackageNameBase64")
 }
-    implementation("androidx.preference:preference-ktx:1.2.1")
