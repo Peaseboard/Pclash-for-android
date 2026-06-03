@@ -75,8 +75,6 @@ object Parcels : SerialFormat {
             serializer: SerializationStrategy<T>,
             value: T
         ) = encodeSerializableValue(serializer, value)
-
-        override fu
         override fun beginStructure(descriptor: SerialDescriptor): CompositeEncoder = this
 
         override fun encodeBoolean(value: Boolean) =
@@ -175,8 +173,6 @@ object Parcels : SerialFormat {
             index: Int,
             deserializer: DeserializationStrategy<T>
         ) = decodeSerializableValue(deserializer)
-
-        override fu
         override fun beginStructure(descriptor: SerialDescriptor): CompositeDecoder = this
 
         override fun decodeBoolean() =
