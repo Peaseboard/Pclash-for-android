@@ -2,7 +2,7 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.serialization")
-    id("org.jetbrains.kotlin.kapt")
+    id("com.google.devtools.ksp")
 }
 
 val gCompileSdkVersion = providers.gradleProperty("gCompileSdkVersion").orNull?.toInt() ?: 0
@@ -47,7 +47,7 @@ android {
 }
 
 dependencies {
-    kapt("androidx.room:room-compiler:$gRoomVersion")
+    ksp("androidx.room:room-compiler:$gRoomVersion")
     implementation(project(":core"))
     implementation(project(":common"))
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$gKotlinSerializationVersion")
