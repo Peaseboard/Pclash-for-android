@@ -7,7 +7,7 @@ import java.time.*
 val geoipDatabaseUrl = "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.metadb"
 val geoipInvalidate = Duration.ofDays(7)
 val geoipOutput = layout.buildDirectory.dir("outputs/geoip").get().asFile
-val mihomoVersion = "v1.18.10"
+val mihomoVersion = "v1.19.25"
 val mihomoBaseUrl = "https://github.com/MetaCubeX/mihomo/releases/download/$mihomoVersion/"
 
 val String.exe: String
@@ -18,10 +18,10 @@ tasks.register("downloadMihomoCore") {
         val jniLibsDir = file("src/main/jniLibs")
 
         val mapping = mapOf(
-            "armeabi-v7a" to "mihomo-android-armv7-v1.18.10.gz",
-            "arm64-v8a" to "mihomo-android-arm64-v1.18.10.gz",
-            "x86" to "mihomo-android-386-v1.18.10.gz",
-            "x86_64" to "mihomo-android-amd64-v1.18.10.gz"
+            "armeabi-v7a" to "mihomo-android-armv7-v1.19.25.gz",
+            "arm64-v8a" to "mihomo-android-arm64-v8-v1.19.25.gz",
+            "x86" to "mihomo-android-386-v1.19.25.gz",
+            "x86_64" to "mihomo-android-amd64-v1.19.25.gz"
         )
 
         mapping.forEach { (abi, fileName) ->

@@ -1,7 +1,7 @@
 package com.pclash.settings
 
 import com.pclash.common.settings.BaseSettings
-import moe.shizuku.preference.PreferenceDataStore
+import androidx.preference.PreferenceDataStore
 
 class SettingsDataStore : PreferenceDataStore() {
     interface Source {

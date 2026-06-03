@@ -189,8 +189,7 @@ object MergedParcels: SerialFormat {
         override fun decodeStringElement(descriptor: SerialDescriptor, index: Int) =
             decodeString()
 
-        override fun decodeUnitElement(descriptor: SerialDescriptor, index: Int) =
-            decodeUnit()
+        override fun decodeUnitElement(descriptor: SerialDescriptor, index: Int) {}
 
         override fun endStructure(descriptor: SerialDescriptor) {}
 
@@ -258,7 +257,6 @@ object MergedParcels: SerialFormat {
         override fun decodeShort() =
             parcel.readInt().toShort()
 
-        override fun decodeUnit() {}
         override fun decodeString(): String {
             val index = parcel.readInt()
 

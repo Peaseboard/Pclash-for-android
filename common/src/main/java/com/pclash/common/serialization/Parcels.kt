@@ -159,8 +159,7 @@ object Parcels : SerialFormat {
         override fun decodeStringElement(descriptor: SerialDescriptor, index: Int) =
             decodeString()
 
-        override fun decodeUnitElement(descriptor: SerialDescriptor, index: Int) =
-            decodeUnit()
+        override fun decodeUnitElement(descriptor: SerialDescriptor, index: Int) {}
 
         override fun endStructure(descriptor: SerialDescriptor) {}
 
@@ -231,7 +230,6 @@ object Parcels : SerialFormat {
         override fun decodeString() =
             parcel.readString() ?: throw NullPointerException("String null")
 
-        override fun decodeUnit() {}
     }
 
     override val serializersModule: SerializersModule = SerializersModule {}

@@ -111,8 +111,6 @@ dependencies {
     implementation("androidx.core:core-ktx:$gAndroidKtxVersion")
     implementation("androidx.appcompat:appcompat:$gAppCompatVersion")
     implementation("com.google.android.material:material:$gMaterialDesignVersion")
-    implementation("moe.shizuku.preference:preference-appcompat:$gShizukuPreferenceVersion")
-    implementation("moe.shizuku.preference:preference-simplemenu-appcompat:$gShizukuPreferenceVersion")
 }
 
 tasks.register("injectPackageNameBase64") {
@@ -128,3 +126,4 @@ tasks.register("injectPackageNameBase64") {
 tasks.named("preBuild") {
     dependsOn("injectPackageNameBase64")
 }
+    implementation("androidx.preference:preference-ktx:1.2.1")

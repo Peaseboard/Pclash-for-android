@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.pclash.preference.UiSettings
 import com.pclash.service.settings.ServiceSettings
-import moe.shizuku.preference.PreferenceFragment
+import androidx.preference.PreferenceFragmentCompat
 
-abstract class BaseSettingFragment : PreferenceFragment() {
+abstract class BaseSettingFragment : PreferenceFragmentCompat() {
     abstract fun onCreateDataStore(): SettingsDataStore
     abstract val xmlResourceId: Int
 
@@ -28,8 +28,6 @@ abstract class BaseSettingFragment : PreferenceFragment() {
     ): View? {
         val result = super.onCreateView(inflater, container, savedInstanceState)
 
-        setDivider(null)
-        setDividerHeight(0)
 
         return result
     }
