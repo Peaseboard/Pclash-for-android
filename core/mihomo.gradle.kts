@@ -7,7 +7,7 @@ import java.time.*
 val geoipDatabaseUrl = "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.metadb"
 val geoipInvalidate = Duration.ofDays(7)
 val geoipOutput = layout.buildDirectory.dir("outputs/geoip").get().asFile
-val mihomoVersion = "v1.18.6"
+val mihomoVersion = "v1.19.26"
 val mihomoBaseUrl = "https://github.com/MetaCubeX/mihomo/releases/download/$mihomoVersion/"
 
 val String.exe: String

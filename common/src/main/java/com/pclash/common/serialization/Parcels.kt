@@ -2,7 +2,6 @@ package com.pclash.common.serialization
 
 import android.os.Parcel
 import kotlinx.serialization.*
-import kotlinx.serialization.modules.SerializersModule {}
 import kotlinx.serialization.modules.SerializersModule
 
 object Parcels : SerialFormat {
