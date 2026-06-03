@@ -3,15 +3,18 @@ plugins {
     id("org.jetbrains.kotlin.android")
 }
 
-val gCompileSdkVersion: Int by project
-val gMinSdkVersion: Int by project
-val gTargetSdkVersion: Int by project
-val gVersionCode: Int by project
-val gVersionName: String by project
-val gKotlinVersion: String by project
-val gAndroidKtxVersion: String by project
-val gAppCompatVersion: String by project
-val gMaterialDesignVersion: String by project
+// Int 类型 (添加 .toInt() 防止崩溃)
+val gCompileSdkVersion = providers.gradleProperty("gCompileSdkVersion").orNull?.toInt() ?: 34
+val gMinSdkVersion = providers.gradleProperty("gMinSdkVersion").orNull?.toInt() ?: 24
+val gTargetSdkVersion = providers.gradleProperty("gTargetSdkVersion").orNull?.toInt() ?: 34
+val gVersionCode = providers.gradleProperty("gVersionCode").orNull?.toInt() ?: 1
+
+// String 类型 (使用 orNull 安全获取)
+val gVersionName = providers.gradleProperty("gVersionName").orNull ?: "1.0"
+val gKotlinVersion = providers.gradleProperty("gKotlinVersion").orNull ?: "1.9.22"
+val gAndroidKtxVersion = providers.gradleProperty("gAndroidKtxVersion").orNull ?: "1.12.0"
+val gAppCompatVersion = providers.gradleProperty("gAppCompatVersion").orNull ?: "1.6.1"
+val gMaterialDesignVersion = providers.gradleProperty("gMaterialDesignVersion").orNull ?: "1.11.0"
 
 android {
     namespace = "com.pclash.design"
@@ -19,9 +22,6 @@ android {
 
     defaultConfig {
         minSdk = gMinSdkVersion
-        targetSdk = gTargetSdkVersion
-        versionCode = gVersionCode
-        versionName = gVersionName
         consumerProguardFiles("consumer-rules.pro")
     }
 
@@ -44,6 +44,8 @@ android {
         jvmTarget = "17"
     }
 }
+
+    // Deprecated fix: moved out of defaultConfig
 
 dependencies {
     implementation(project(":common"))

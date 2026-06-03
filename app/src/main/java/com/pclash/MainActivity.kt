@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.pclash.common.utils.intent
 import com.pclash.common.utils.asBytesString
+import com.pclash.common.utils.asSpeedString
 import com.pclash.core.model.General
 import com.pclash.databinding.ActivityMainBinding
 import com.pclash.remote.withClash
@@ -70,6 +71,27 @@ class MainActivity : BaseActivity() {
         binding.about.setOnClickListener {
             showAboutDialog()
         }
+
+        setupMenuItems()
+    }
+
+    private fun setupMenuItems() {
+        binding.logs.apply {
+            findViewById<View>(android.R.id.icon).setBackgroundResource(R.drawable.ic_logs)
+            findViewById<TextView>(android.R.id.title).setText(R.string.logs)
+        }
+        binding.settings.apply {
+            findViewById<View>(android.R.id.icon).setBackgroundResource(R.drawable.ic_settings)
+            findViewById<TextView>(android.R.id.title).setText(R.string.settings)
+        }
+        binding.support.apply {
+            findViewById<View>(android.R.id.icon).setBackgroundResource(R.drawable.ic_feedback)
+            findViewById<TextView>(android.R.id.title).setText(R.string.support)
+        }
+        binding.about.apply {
+            findViewById<View>(android.R.id.icon).setBackgroundResource(R.drawable.ic_about)
+            findViewById<TextView>(android.R.id.title).setText(R.string.about)
+        }
     }
 
     override fun onStart() {
@@ -113,11 +135,9 @@ class MainActivity : BaseActivity() {
             withClash {
                 try {
                     while (clashRunning && isActive) {
-                        val bandwidth = queryBandwidth()
-                        binding.status.summary = getString(
-                            R.string.format_traffic_forwarded,
-                            bandwidth.asBytesString()
-                        )
+                        val traffic = querySpeed()
+                        binding.downloadSpeed.text = traffic.download.asSpeedString()
+                        binding.uploadSpeed.text = traffic.upload.asSpeedString()
                         delay(1000)
                     }
                 } finally {
@@ -142,6 +162,9 @@ class MainActivity : BaseActivity() {
             binding.proxies.visibility = View.VISIBLE
         } else {
             stopBandwidthPolling()
+
+            binding.downloadSpeed.text = "0.00 B/s"
+            binding.uploadSpeed.text = "0.00 B/s"
 
             binding.status.setCardBackgroundColor(getColor(R.color.primaryCardColorStopped))
             binding.status.icon = getDrawable(R.drawable.ic_stopped)

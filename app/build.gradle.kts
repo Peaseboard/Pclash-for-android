@@ -6,19 +6,20 @@ plugins {
     id("org.jetbrains.kotlin.plugin.serialization")
 }
 
-val gCompileSdkVersion: Int by project
-val gMinSdkVersion: Int by project
-val gTargetSdkVersion: Int by project
-val gVersionCode: Int by project
-val gVersionName: String by project
-val gKotlinVersion: String by project
-val gKotlinCoroutineVersion: String by project
-val gAndroidKtxVersion: String by project
-val gRecyclerviewVersion: String by project
-val gAppCompatVersion: String by project
-val gMaterialDesignVersion: String by project
-val gShizukuPreferenceVersion: String by project
-val gMultiprocessPreferenceVersion: String by project
+// 使用 providers.gradleProperty 替代 by project，解决类型转换报错
+val gCompileSdkVersion = providers.gradleProperty("gCompileSdkVersion").orNull?.toInt() ?: 34
+val gMinSdkVersion = providers.gradleProperty("gMinSdkVersion").orNull?.toInt() ?: 24
+val gTargetSdkVersion = providers.gradleProperty("gTargetSdkVersion").orNull?.toInt() ?: 34
+val gVersionCode = providers.gradleProperty("gVersionCode").orNull?.toInt() ?: 1
+val gVersionName = providers.gradleProperty("gVersionName").orNull ?: "1.0.0"
+val gKotlinVersion = providers.gradleProperty("gKotlinVersion").orNull ?: "1.9.22"
+val gKotlinCoroutineVersion = providers.gradleProperty("gKotlinCoroutineVersion").orNull ?: "1.7.3"
+val gAndroidKtxVersion = providers.gradleProperty("gAndroidKtxVersion").orNull ?: "1.12.0"
+val gRecyclerviewVersion = providers.gradleProperty("gRecyclerviewVersion").orNull ?: "1.3.2"
+val gAppCompatVersion = providers.gradleProperty("gAppCompatVersion").orNull ?: "1.6.1"
+val gMaterialDesignVersion = providers.gradleProperty("gMaterialDesignVersion").orNull ?: "1.11.0"
+val gShizukuPreferenceVersion = providers.gradleProperty("gShizukuPreferenceVersion").orNull ?: "10.0.0"
+val gMultiprocessPreferenceVersion = providers.gradleProperty("gMultiprocessPreferenceVersion").orNull ?: "1.1.0"
 
 android {
     namespace = "com.pclash"

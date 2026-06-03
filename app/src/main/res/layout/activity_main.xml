@@ -1,194 +1,208 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:scrollbars="none"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:animateLayoutChanges="true">
+    android:background="@color/backgroundColor">
 
-    <LinearLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:animateLayoutChanges="true"
-        tools:context=".MainActivity">
+        android:background="@android:color/transparent"
+        app:elevation="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:gravity="center_vertical">
+            android:layout_height="?attr/actionBarSize"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="24dp">
 
-            <View
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginStart="40dp"
-                android:background="@drawable/ic_logo" />
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_logo" />
 
             <TextView
-                android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                android:textSize="20sp"
-                android:text="@string/launch_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/application_name"
                 android:textColor="?attr/colorPrimary"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="22.5dp" />
+                android:textSize="20sp" />
         </LinearLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
-        <com.pclash.design.view.ColorfulTextCard
-            android:id="@+id/status"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
-            android:theme="@style/AppTheme.ThemeOverlay.ForceDarkSurface"
-            app:cardElevation="4dp"
-            app:cardCornerRadius="8dp"
-            app:cardBackgroundColor="@color/primaryCardColorStopped"
-            app:icon="@drawable/ic_stopped"
-            app:title="@string/stopped"
-            app:summary="@string/tap_to_start" />
-
-        <com.pclash.design.view.TextCard
-            android:id="@+id/proxies"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
-            app:cardElevation="4dp"
-            app:cardCornerRadius="8dp"
-            app:cardBackgroundColor="?attr/colorSurface"
-            app:icon="@drawable/ic_proxies"
-            app:title="@string/proxy"
-            app:summary="@string/direct_mode" />
-
-        <com.pclash.design.view.TextCard
-            android:id="@+id/profiles"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
-            app:cardElevation="4dp"
-            app:cardCornerRadius="8dp"
-            app:cardBackgroundColor="?attr/colorSurface"
-            app:icon="@drawable/ic_profiles"
-            app:title="@string/profiles"
-            app:summary="@string/not_selected" />
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
-            android:id="@+id/logs"
-            android:padding="15dp"
-            android:layout_marginStart="35dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
-            android:focusable="true"
-            android:clickable="true"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:padding="20dp">
 
-            <View
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:background="@drawable/ic_logs" />
-
-            <TextView
-                android:layout_width="wrap_content"
+            <!-- Traffic Dashboard -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:text="@string/logs" />
-        </LinearLayout>
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="#10000000">
 
-        <LinearLayout
-            android:id="@+id/settings"
-            android:padding="15dp"
-            android:layout_marginStart="35dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
-            android:focusable="true"
-            android:clickable="true"
-            android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="20dp"
+                    android:baselineAligned="false">
 
-            <View
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:background="@drawable/ic_settings" />
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="DOWNLOAD"
+                            android:textSize="12sp"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:letterSpacing="0.1" />
+
+                        <TextView
+                            android:id="@+id/download_speed"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0.00 KB/s"
+                            android:textSize="18sp"
+                            android:fontFamily="sans-serif-black"
+                            android:textColor="?attr/colorPrimary"
+                            android:layout_marginTop="4dp" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="#10000000" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="UPLOAD"
+                            android:textSize="12sp"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:letterSpacing="0.1" />
+
+                        <TextView
+                            android:id="@+id/upload_speed"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0.00 KB/s"
+                            android:textSize="18sp"
+                            android:fontFamily="sans-serif-black"
+                            android:textColor="?attr/colorPrimary"
+                            android:layout_marginTop="4dp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Main Status Card -->
+            <com.pclash.design.view.ColorfulTextCard
+                android:id="@+id/status"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginBottom="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardCornerRadius="28dp"
+                app:cardElevation="8dp"
+                app:cardBackgroundColor="@color/primaryCardColorStopped"
+                app:icon="@drawable/ic_stopped"
+                app:title="@string/stopped"
+                app:summary="@string/tap_to_start" />
+
+            <GridLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:text="@string/settings" />
-        </LinearLayout>
+                android:columnCount="2"
+                android:alignmentMode="alignMargins"
+                android:columnOrderPreserved="false">
 
-        <LinearLayout
-            android:id="@+id/support"
-            android:padding="15dp"
-            android:layout_marginStart="35dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
-            android:focusable="true"
-            android:clickable="true"
-            android:orientation="horizontal">
+                <com.pclash.design.view.TextCard
+                    android:id="@+id/proxies"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    app:cardCornerRadius="24dp"
+                    app:cardElevation="2dp"
+                    app:icon="@drawable/ic_proxies"
+                    app:title="@string/proxy"
+                    app:summary="@string/direct_mode" />
 
-            <View
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:background="@drawable/ic_feedback" />
+                <com.pclash.design.view.TextCard
+                    android:id="@+id/profiles"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    app:cardCornerRadius="24dp"
+                    app:cardElevation="2dp"
+                    app:icon="@drawable/ic_profiles"
+                    app:title="@string/profiles"
+                    app:summary="@string/not_selected" />
+            </GridLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
+            <!-- Menu List -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:text="@string/support" />
+                app:cardCornerRadius="24dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="#10000000">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingVertical="8dp">
+
+                    <include layout="@layout/item_main_menu" android:id="@+id/logs" />
+                    <include layout="@layout/item_main_menu" android:id="@+id/settings" />
+                    <include layout="@layout/item_main_menu" android:id="@+id/support" />
+                    <include layout="@layout/item_main_menu" android:id="@+id/about" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
         </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
-        <LinearLayout
-            android:id="@+id/about"
-            android:padding="15dp"
-            android:layout_marginStart="35dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
-            android:focusable="true"
-            android:clickable="true"
-            android:orientation="horizontal">
-
-            <View
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:background="@drawable/ic_about" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:text="@string/about" />
-        </LinearLayout>
-    </LinearLayout>
-</ScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

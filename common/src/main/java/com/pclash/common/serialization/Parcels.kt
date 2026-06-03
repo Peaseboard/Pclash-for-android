@@ -2,8 +2,8 @@ package com.pclash.common.serialization
 
 import android.os.Parcel
 import kotlinx.serialization.*
-import kotlinx.serialization.modules.EmptyModule
-import kotlinx.serialization.modules.SerialModule
+import kotlinx.serialization.modules.SerializersModule {}
+import kotlinx.serialization.modules.SerializersModule
 
 object Parcels : SerialFormat {
     fun <T> dump(serializer: SerializationStrategy<T>, obj: T, parcel: Parcel) {
@@ -16,8 +16,8 @@ object Parcels : SerialFormat {
 
     private class ParcelsEncoder(private val parcel: Parcel) :
         Encoder, CompositeEncoder {
-        override val context: SerialModule
-            get() = EmptyModule
+        override val context: SerializersModule
+            get() = SerializersModule {}
 
         override fun beginCollection(
             descriptor: SerialDescriptor,
@@ -119,8 +119,8 @@ object Parcels : SerialFormat {
     }
 
     class ParcelsDecoder(private val parcel: Parcel) : Decoder, CompositeDecoder {
-        override val context: SerialModule
-            get() = EmptyModule
+        override val context: SerializersModule
+            get() = SerializersModule {}
         override val updateMode: UpdateMode
             get() = UpdateMode.BANNED
 
@@ -235,7 +235,7 @@ object Parcels : SerialFormat {
         override fun decodeUnit() {}
     }
 
-    override val context: SerialModule = EmptyModule
+    override val context: SerializersModule = SerializersModule {}
 }
 
 

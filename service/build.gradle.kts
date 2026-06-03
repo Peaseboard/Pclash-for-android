@@ -5,17 +5,17 @@ plugins {
     id("org.jetbrains.kotlin.kapt")
 }
 
-val gCompileSdkVersion: Int by project
-val gMinSdkVersion: Int by project
-val gTargetSdkVersion: Int by project
-val gVersionCode: Int by project
-val gVersionName: String by project
-val gKotlinVersion: String by project
-val gKotlinCoroutineVersion: String by project
-val gKotlinSerializationVersion: String by project
-val gRoomVersion: String by project
-val gAndroidKtxVersion: String by project
-val gMultiprocessPreferenceVersion: String by project
+val gCompileSdkVersion = providers.gradleProperty("gCompileSdkVersion").orNull?.toInt() ?: 0
+val gMinSdkVersion = providers.gradleProperty("gMinSdkVersion").orNull?.toInt() ?: 0
+val gTargetSdkVersion = providers.gradleProperty("gTargetSdkVersion").orNull?.toInt() ?: 0
+val gVersionCode = providers.gradleProperty("gVersionCode").orNull?.toInt() ?: 0
+val gVersionName = providers.gradleProperty("gVersionName").orNull ?: ""
+val gKotlinVersion = providers.gradleProperty("gKotlinVersion").orNull ?: ""
+val gKotlinCoroutineVersion = providers.gradleProperty("gKotlinCoroutineVersion").orNull ?: ""
+val gKotlinSerializationVersion = providers.gradleProperty("gKotlinSerializationVersion").orNull ?: ""
+val gRoomVersion = providers.gradleProperty("gRoomVersion").orNull ?: ""
+val gAndroidKtxVersion = providers.gradleProperty("gAndroidKtxVersion").orNull ?: ""
+val gMultiprocessPreferenceVersion = providers.gradleProperty("gMultiprocessPreferenceVersion").orNull ?: ""
 
 android {
     namespace = "com.pclash.service"
@@ -23,9 +23,6 @@ android {
 
     defaultConfig {
         minSdk = gMinSdkVersion
-        targetSdk = gTargetSdkVersion
-        versionCode = gVersionCode
-        versionName = gVersionName
         consumerProguardFiles("consumer-rules.pro")
     }
 

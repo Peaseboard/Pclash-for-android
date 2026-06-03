@@ -4,15 +4,16 @@ plugins {
     id("org.jetbrains.kotlin.plugin.serialization")
 }
 
-val gCompileSdkVersion: Int by project
-val gMinSdkVersion: Int by project
-val gTargetSdkVersion: Int by project
-val gVersionCode: Int by project
-val gVersionName: String by project
-val gKotlinVersion: String by project
-val gKotlinCoroutineVersion: String by project
-val gKotlinSerializationVersion: String by project
-val gAndroidKtxVersion: String by project
+// 数字类型 (Int) 必须加上 .toInt()
+val gCompileSdkVersion = providers.gradleProperty("gCompileSdkVersion").orNull?.toInt() ?: 34
+val gMinSdkVersion = providers.gradleProperty("gMinSdkVersion").orNull?.toInt() ?: 24
+val gTargetSdkVersion = providers.gradleProperty("gTargetSdkVersion").orNull?.toInt() ?: 34
+
+// 字符串类型 (String) 直接读取，注意后面的默认版本号要和你 gradle.properties 里的一致
+val gKotlinVersion = providers.gradleProperty("gKotlinVersion").orNull ?: "1.9.22"
+val gKotlinCoroutineVersion = providers.gradleProperty("gKotlinCoroutineVersion").orNull ?: "1.7.3"
+val gKotlinSerializationVersion = providers.gradleProperty("gKotlinSerializationVersion").orNull ?: "1.6.0"
+val gAndroidKtxVersion = providers.gradleProperty("gAndroidKtxVersion").orNull ?: "1.12.0"
 
 android {
     namespace = "com.pclash.common"
@@ -20,9 +21,7 @@ android {
 
     defaultConfig {
         minSdk = gMinSdkVersion
-        targetSdk = gTargetSdkVersion
-        versionCode = gVersionCode
-        versionName = gVersionName
+
         consumerProguardFiles("consumer-rules.pro")
     }
 
@@ -43,6 +42,9 @@ android {
 
     kotlinOptions {
         jvmTarget = "17"
+    }
+    buildFeatures {
+        buildConfig = true  // 👈 加上这一行
     }
 }
 
