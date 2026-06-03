@@ -101,6 +101,7 @@ object MergedParcels: SerialFormat {
             value: T
         ) = encodeSerializableValue(serializer, value)
 
+        override fu
         override fun beginStructure(descriptor: SerialDescriptor): CompositeEncoder = this
 
         override fun encodeBoolean(value: Boolean) =
@@ -202,7 +203,10 @@ object MergedParcels: SerialFormat {
             descriptor: SerialDescriptor,
             index: Int,
             deserializer: DeserializationStrategy<T>
-        ) = decodeSerializableValue(deserializer)n beginStructure(descriptor: SerialDescriptor): CompositeDecoder = this
+        ) = decodeSerializableValue(deserializer)
+
+        override fu
+        override fun beginStructure(descriptor: SerialDescriptor): CompositeDecoder = this
 
         override fun decodeBoolean() =
             parcel.readByte() != 0.toByte()
