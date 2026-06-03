@@ -196,10 +196,6 @@ object MergedParcels: SerialFormat {
             parcel.readLong()
 
         override fun decodeNotNullMark() =
-
-        override fun decodeNull() =
-            null
-
         override fun decodeShort() =
             parcel.readInt().toShort()
 
