@@ -19,26 +19,8 @@ object Parcels : SerialFormat {
     private class ParcelsEncoder(private val parcel: Parcel) : AbstractEncoder() {
         override val serializersModule: SerializersModule get() = SerializersModule {}
 
-        override fun beginCollection(descriptor: SerialDescriptor, collectionSize: Int, vararg typeSerializers: KSerializer<*>): CompositeEncoder {
-            encodeInt(collectionSize)
-            return super.beginCollection(descriptor, collectionSize, *typeSerializers)
-        }
-
         override fun beginStructure(descriptor: SerialDescriptor): CompositeEncoder = this
-
         override fun endStructure(descriptor: SerialDescriptor) {}
-
-        override fun encodeBooleanElement(descriptor: SerialDescriptor, index: Int, value: Boolean) = encodeBoolean(value)
-        override fun encodeByteElement(descriptor: SerialDescriptor, index: Int, value: Byte) = encodeByte(value)
-        override fun encodeCharElement(descriptor: SerialDescriptor, index: Int, value: Char) = encodeChar(value)
-        override fun encodeDoubleElement(descriptor: SerialDescriptor, index: Int, value: Double) = encodeDouble(value)
-        override fun encodeFloatElement(descriptor: SerialDescriptor, index: Int, value: Float) = encodeFloat(value)
-        override fun encodeIntElement(descriptor: SerialDescriptor, index: Int, value: Int) = encodeInt(value)
-        override fun encodeLongElement(descriptor: SerialDescriptor, index: Int, value: Long) = encodeLong(value)
-        override fun encodeShortElement(descriptor: SerialDescriptor, index: Int, value: Short) = encodeShort(value)
-
-        override fun <T : Any> encodeNullableSerializableElement(descriptor: SerialDescriptor, index: Int, serializer: SerializationStrategy<T>, value: T?) = encodeNullableSerializableValue(serializer, value)
-        override fun <T> encodeSerializableElement(descriptor: SerialDescriptor, index: Int, serializer: SerializationStrategy<T>, value: T) = encodeSerializableValue(serializer, value)
 
         override fun encodeBoolean(value: Boolean) = parcel.writeByte(if (value) 1 else 0)
         override fun encodeByte(value: Byte) = parcel.writeByte(value)
@@ -48,8 +30,6 @@ object Parcels : SerialFormat {
         override fun encodeFloat(value: Float) = parcel.writeFloat(value)
         override fun encodeInt(value: Int) = parcel.writeInt(value)
         override fun encodeLong(value: Long) = parcel.writeLong(value)
-        override fun encodeNotNullMark() = encodeBoolean(true)
-        override fun encodeNull() = encodeBoolean(false)
         override fun encodeShort(value: Short) = parcel.writeInt(value.toInt())
         override fun encodeString(value: String) = parcel.writeString(value)
         override fun encodeUnit() {}
@@ -61,21 +41,8 @@ object Parcels : SerialFormat {
 
         override fun decodeSequentially() = true
         override fun decodeElementIndex(descriptor: SerialDescriptor) = CompositeDecoder.UNKNOWN_NAME
-        override fun decodeCollectionSize(descriptor: SerialDescriptor) = decodeInt()
         override fun beginStructure(descriptor: SerialDescriptor): CompositeDecoder = this
         override fun endStructure(descriptor: SerialDescriptor) {}
-
-        override fun decodeBooleanElement(descriptor: SerialDescriptor, index: Int) = decodeBoolean()
-        override fun decodeByteElement(descriptor: SerialDescriptor, index: Int) = decodeByte()
-        override fun decodeCharElement(descriptor: SerialDescriptor, index: Int) = decodeChar()
-        override fun decodeDoubleElement(descriptor: SerialDescriptor, index: Int) = decodeDouble()
-        override fun decodeFloatElement(descriptor: SerialDescriptor, index: Int) = decodeFloat()
-        override fun decodeIntElement(descriptor: SerialDescriptor, index: Int) = decodeInt()
-        override fun decodeLongElement(descriptor: SerialDescriptor, index: Int) = decodeLong()
-        override fun decodeShortElement(descriptor: SerialDescriptor, index: Int) = decodeShort()
-
-        override fun <T : Any> decodeNullableSerializableElement(descriptor: SerialDescriptor, index: Int, deserializer: DeserializationStrategy<T?>) = decodeNullableSerializableValue(deserializer)
-        override fun <T> decodeSerializableElement(descriptor: SerialDescriptor, index: Int, deserializer: DeserializationStrategy<T>) = decodeSerializableValue(deserializer)
 
         override fun decodeBoolean() = parcel.readByte() != 0.toByte()
         override fun decodeByte() = parcel.readByte()
