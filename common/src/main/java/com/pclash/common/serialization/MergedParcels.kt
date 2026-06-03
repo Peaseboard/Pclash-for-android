@@ -190,20 +190,6 @@ object MergedParcels: SerialFormat {
         override fun decodeUnitElement(descriptor: SerialDescriptor, index: Int) {}
 
         override fun endStructure(descriptor: SerialDescriptor) {}
-
-        override fun <T : Any> decodeNullableSerializableElement(
-            descriptor: SerialDescriptor,
-            index: Int,
-            deserializer: DeserializationStrategy<T?>
-        ) = decodeNullableSerializableValue(deserializer)
-
-        override fun <T> decodeSerializableElement(
-            descriptor: SerialDescriptor,
-            index: Int,
-            deserializer: DeserializationStrategy<T>
-        ) = decodeSerializableValue(deserializer)
-        override fun beginStructure(descriptor: SerialDescriptor): CompositeDecoder = this
-
         override fun decodeBoolean() =
             parcel.readByte() != 0.toByte()
 
