@@ -180,14 +180,14 @@ object Parcels : SerialFormat {
             index: Int,
             deserializer: DeserializationStrategy<T?>,
             old: T?
-        ) = updateNullableSerializableValue(deserializer, old)
+        ) = deserializer.deserialize(this)
 
         override fun <T> updateSerializableElement(
             descriptor: SerialDescriptor,
             index: Int,
             deserializer: DeserializationStrategy<T>,
             old: T
-        ) = updateSerializableValue(deserializer, old)
+        ) = deserializer.deserialize(this)
 
         override fun beginStructure(descriptor: SerialDescriptor): CompositeDecoder = this
 
