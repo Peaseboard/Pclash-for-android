@@ -3,7 +3,7 @@ pluginManagement {
         google()
         mavenCentral()
         gradlePluginPortal()
-        maven("https://raw.githubusercontent.com/RikkaApps/maven-repo/master/")
+        maven("https://raw.githubusercontent.com/RikkaW/maven-repo/main/")
     }
 }
 
@@ -12,7 +12,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven("https://raw.githubusercontent.com/RikkaApps/maven-repo/master/")
+        maven("https://raw.githubusercontent.com/RikkaW/maven-repo/main/")
     }
 }
 

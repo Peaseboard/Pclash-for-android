@@ -15,7 +15,7 @@ object Parcels : SerialFormat {
 
     private class ParcelsEncoder(private val parcel: Parcel) :
         Encoder, CompositeEncoder {
-        override val context: SerializersModule
+        override val serializersModule: SerializersModule
             get() = SerializersModule {}
 
         override fun beginCollection(
@@ -118,7 +118,7 @@ object Parcels : SerialFormat {
     }
 
     class ParcelsDecoder(private val parcel: Parcel) : Decoder, CompositeDecoder {
-        override val context: SerializersModule
+        override val serializersModule: SerializersModule
             get() = SerializersModule {}
         override val updateMode: UpdateMode
             get() = UpdateMode.BANNED
@@ -234,7 +234,7 @@ object Parcels : SerialFormat {
         override fun decodeUnit() {}
     }
 
-    override val context: SerializersModule = SerializersModule {}
+    override val serializersModule: SerializersModule = SerializersModule {}
 }
 
 

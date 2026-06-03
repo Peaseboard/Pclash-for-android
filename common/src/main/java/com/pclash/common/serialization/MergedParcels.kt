@@ -40,7 +40,7 @@ object MergedParcels: SerialFormat {
             return result
         }
 
-        override val context: SerializersModule
+        override val serializersModule: SerializersModule
             get() = SerializersModule {}
 
         override fun beginCollection(
@@ -148,7 +148,7 @@ object MergedParcels: SerialFormat {
 
     class ParcelsDecoder(private val strings: List<String>, private val parcel: Parcel) : Decoder,
         CompositeDecoder {
-        override val context: SerializersModule
+        override val serializersModule: SerializersModule
             get() = SerializersModule {}
         override val updateMode: UpdateMode
             get() = UpdateMode.BANNED
@@ -267,7 +267,7 @@ object MergedParcels: SerialFormat {
 
     }
 
-    override val context: SerializersModule = SerializersModule {}
+    override val serializersModule: SerializersModule = SerializersModule {}
 }
 
 
