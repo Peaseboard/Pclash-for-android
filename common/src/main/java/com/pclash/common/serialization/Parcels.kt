@@ -2,6 +2,7 @@ package com.pclash.common.serialization
 
 import android.os.Parcel
 import kotlinx.serialization.*
+import kotlinx.serialization.encoding.*
 import kotlinx.serialization.modules.SerializersModule
 
 object Parcels : SerialFormat {
@@ -14,7 +15,7 @@ object Parcels : SerialFormat {
     }
 
     private class ParcelsEncoder(private val parcel: Parcel) :
-        Encoder, CompositeEncoder {
+        AbstractEncoder() {
         override val serializersModule: SerializersModule
             get() = SerializersModule {}
 
@@ -117,7 +118,7 @@ object Parcels : SerialFormat {
         override fun encodeUnit() {}
     }
 
-    class ParcelsDecoder(private val parcel: Parcel) : Decoder, CompositeDecoder {
+    class ParcelsDecoder(private val parcel: Parcel) : AbstractDecoder() {
         override val serializersModule: SerializersModule
             get() = SerializersModule {}
         override val updateMode: UpdateMode
