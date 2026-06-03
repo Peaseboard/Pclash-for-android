@@ -2,8 +2,8 @@ package com.pclash.service
 
 import android.content.Context
 import android.content.SharedPreferences
-import rikka.preference.MultiProcessPreference
-import rikka.preference.PreferenceProvider
+import dev.rikka.rikkax.preference.multiprocess.MultiProcessPreference
+import dev.rikka.rikkax.preference.multiprocess.PreferenceProvider
 
 class ServiceSettingsProvider : PreferenceProvider() {
     override fun onCreatePreference(context: Context?): SharedPreferences {
