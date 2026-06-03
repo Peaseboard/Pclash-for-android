@@ -96,6 +96,7 @@ object MergedParcels: SerialFormat {
             serializer: SerializationStrategy<T>,
             value: T
         ) = encodeSerializableValue(serializer, value)
+
         override fun beginStructure(descriptor: SerialDescriptor): CompositeEncoder = this
 
         override fun encodeBoolean(value: Boolean) =
@@ -193,7 +194,9 @@ object MergedParcels: SerialFormat {
             parcel.readInt()
 
         override fun decodeLong() =
-            parcel.readLong()override fun decodeShort() =
+            parcel.readLong()
+
+        override fun decodeShort() =
             parcel.readInt().toShort()
 
         override fun decodeString(): String {
