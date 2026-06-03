@@ -101,10 +101,7 @@ object MergedParcels: SerialFormat {
             value: T
         ) = encodeSerializableValue(serializer, value)
 
-        override fun beginStructure(
-            descriptor: SerialDescriptor,
-            vararg typeSerializers: KSerializer<*>
-        ): CompositeEncoder = this
+        override fun beginStructure(descriptor: SerialDescriptor): CompositeEncoder = this
 
         override fun encodeBoolean(value: Boolean) =
             parcel.writeByte(if (value) 1 else 0)
@@ -221,10 +218,7 @@ object MergedParcels: SerialFormat {
             old: T
         ) = updateSerializableValue(deserializer, old)
 
-        override fun beginStructure(
-            descriptor: SerialDescriptor,
-            vararg typeParams: KSerializer<*>
-        ): CompositeDecoder = this
+        override fun beginStructure(descriptor: SerialDescriptor): CompositeDecoder = this
 
         override fun decodeBoolean() =
             parcel.readByte() != 0.toByte()

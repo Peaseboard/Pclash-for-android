@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.pclash">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
@@ -17,7 +16,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".MainActivity"
+            android:name=".MainActivity" android:exported="true"
             android:label="@string/launch_name"
             android:configChanges="uiMode"
             android:launchMode="singleTop">
@@ -101,7 +100,7 @@
             android:exported="false"
             android:label="@string/clash_logcat" />
         <service
-            android:name=".TileService"
+            android:name=".TileService" android:exported="true"
             android:icon="@drawable/ic_notification"
             android:label="@string/launch_name"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">

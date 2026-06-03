@@ -71,6 +71,7 @@
         <receiver
             android:enabled="false"
             android:name=".RestartReceiver"
+            android:exported="false"
             android:process=":background">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
