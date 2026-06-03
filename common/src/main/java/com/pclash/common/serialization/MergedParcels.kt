@@ -3,7 +3,6 @@ package com.pclash.common.serialization
 import android.os.Parcel
 import kotlinx.serialization.*
 import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.descriptors.UpdateMode
 import kotlinx.serialization.encoding.*
 import kotlinx.serialization.modules.SerializersModule
 
@@ -55,12 +54,10 @@ object MergedParcels: SerialFormat {
             val index = strings.computeIfAbsent(value) { stringIndex++ }
             parcel.writeInt(index)
         }
-        override fun encodeUnit() {}
     }
 
     class ParcelsDecoder(private val strings: List<String>, private val parcel: Parcel) : AbstractDecoder() {
         override val serializersModule: SerializersModule get() = SerializersModule {}
-        override val updateMode: UpdateMode get() = UpdateMode.BANNED
 
         override fun decodeSequentially() = true
         override fun decodeElementIndex(descriptor: SerialDescriptor) = CompositeDecoder.UNKNOWN_NAME
