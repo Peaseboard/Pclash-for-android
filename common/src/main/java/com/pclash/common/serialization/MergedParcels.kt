@@ -186,9 +186,6 @@ object MergedParcels: SerialFormat {
 
         override fun decodeStringElement(descriptor: SerialDescriptor, index: Int) =
             decodeString()
-
-        override fun decodeUnitElement(descriptor: SerialDescriptor, index: Int) {}
-
         override fun endStructure(descriptor: SerialDescriptor) {}
         override fun decodeBoolean() =
             parcel.readByte() != 0.toByte()
