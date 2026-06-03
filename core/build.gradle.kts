@@ -16,6 +16,7 @@ val gKotlinVersion = providers.gradleProperty("gKotlinVersion").orNull ?: "1.9.2
 val gKotlinCoroutineVersion = providers.gradleProperty("gKotlinCoroutineVersion").orNull ?: "1.7.3"
 val gKotlinSerializationVersion = providers.gradleProperty("gKotlinSerializationVersion").orNull ?: "1.6.2"
 val gAndroidKtxVersion = providers.gradleProperty("gAndroidKtxVersion").orNull ?: "1.12.0"
+val gVersionName = providers.gradleProperty("gVersionName").orNull ?: "1.0.0"
 
 val geoipOutput = layout.buildDirectory.dir("outputs/geoip").get().asFile
 val jniLibsDir = file("src/main/jniLibs")
@@ -27,6 +28,7 @@ android {
     defaultConfig {
         minSdk = gMinSdkVersion
         consumerProguardFiles("consumer-rules.pro")
+        buildConfigField("String", "VERSION_NAME", "\"${gVersionName}\")
     }
 
     buildTypes {
