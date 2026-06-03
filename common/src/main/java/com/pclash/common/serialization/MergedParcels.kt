@@ -80,7 +80,6 @@ object MergedParcels: SerialFormat {
             encodeShort(value)            encodeString(value)
 
         override fun encodeUnitElement(descriptor: SerialDescriptor, index: Int) =
-            encodeUnit()
 
         override fun endStructure(descriptor: SerialDescriptor) {}
 
@@ -155,31 +154,22 @@ object MergedParcels: SerialFormat {
             CompositeDecoder.UNKNOWN_NAME
 
         override fun decodeCollectionSize(descriptor: SerialDescriptor) =
-            decodeInt()
 
         override fun decodeBooleanElement(descriptor: SerialDescriptor, index: Int) =
-            decodeBoolean()
 
         override fun decodeByteElement(descriptor: SerialDescriptor, index: Int) =
-            decodeByte()
 
         override fun decodeCharElement(descriptor: SerialDescriptor, index: Int) =
-            decodeChar()
 
         override fun decodeDoubleElement(descriptor: SerialDescriptor, index: Int) =
-            decodeDouble()
 
         override fun decodeFloatElement(descriptor: SerialDescriptor, index: Int) =
-            decodeFloat()
 
         override fun decodeIntElement(descriptor: SerialDescriptor, index: Int) =
-            decodeInt()
 
         override fun decodeShortElement(descriptor: SerialDescriptor, index: Int) =
-            decodeShort()
 
         override fun decodeLongElement(descriptor: SerialDescriptor, index: Int) =
-            decodeLong()            decodeString()
         override fun endStructure(descriptor: SerialDescriptor) {}
         override fun decodeBoolean() =
             parcel.readByte() != 0.toByte()
@@ -206,7 +196,6 @@ object MergedParcels: SerialFormat {
             parcel.readLong()
 
         override fun decodeNotNullMark() =
-            decodeBoolean()
 
         override fun decodeNull() =
             null
