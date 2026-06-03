@@ -2,6 +2,8 @@ package com.pclash.common.serialization
 
 import android.os.Parcel
 import kotlinx.serialization.*
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.descriptors.UpdateMode
 import kotlinx.serialization.encoding.*
 import kotlinx.serialization.modules.SerializersModule
 
