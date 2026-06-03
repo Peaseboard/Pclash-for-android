@@ -173,23 +173,7 @@ object Parcels : SerialFormat {
             descriptor: SerialDescriptor,
             index: Int,
             deserializer: DeserializationStrategy<T>
-        ) = decodeSerializableValue(deserializer)
-
-        override fun <T : Any> updateNullableSerializableElement(
-            descriptor: SerialDescriptor,
-            index: Int,
-            deserializer: DeserializationStrategy<T?>,
-            old: T?
-        ) = deserializer.deserialize(this)
-
-        override fun <T> updateSerializableElement(
-            descriptor: SerialDescriptor,
-            index: Int,
-            deserializer: DeserializationStrategy<T>,
-            old: T
-        ) = deserializer.deserialize(this)
-
-        override fun beginStructure(descriptor: SerialDescriptor): CompositeDecoder = this
+        ) = decodeSerializableValue(deserializer)n beginStructure(descriptor: SerialDescriptor): CompositeDecoder = this
 
         override fun decodeBoolean() =
             parcel.readByte() != 0.toByte()
