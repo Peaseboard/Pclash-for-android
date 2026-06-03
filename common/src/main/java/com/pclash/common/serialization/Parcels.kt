@@ -52,10 +52,7 @@ object Parcels : SerialFormat {
             encodeLong(value)
 
         override fun encodeShortElement(descriptor: SerialDescriptor, index: Int, value: Short) =
-            encodeShort(value)
-
-        override fun encodeStringElement(descriptor: SerialDescriptor, index: Int, value: String) =
-            encodeString(value)
+            encodeShort(value)            encodeString(value)
 
         override fun encodeUnitElement(descriptor: SerialDescriptor, index: Int) =
             encodeUnit()
@@ -153,10 +150,7 @@ object Parcels : SerialFormat {
             decodeShort()
 
         override fun decodeLongElement(descriptor: SerialDescriptor, index: Int) =
-            decodeLong()
-
-        override fun decodeStringElement(descriptor: SerialDescriptor, index: Int) =
-            decodeString()
+            decodeLong()            decodeString()
         override fun endStructure(descriptor: SerialDescriptor) {}
         override fun decodeBoolean() =
             parcel.readByte() != 0.toByte()
