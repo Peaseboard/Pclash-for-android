@@ -28,7 +28,7 @@ android {
     defaultConfig {
         minSdk = gMinSdkVersion
         consumerProguardFiles("consumer-rules.pro")
-        buildConfigField("String", "VERSION_NAME", "\"${gVersionName}\")
+        buildConfigField("String", "VERSION_NAME", "\"${gVersionName}\"")
     }
 
     buildTypes {
