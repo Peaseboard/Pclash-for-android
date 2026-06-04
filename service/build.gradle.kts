@@ -22,8 +22,8 @@ android {
     compileSdk = gCompileSdkVersion
 
     sourceSets {
-        main {
-            aidl.srcDirs("src/main/aidl")
+        getByName("main") {
+            aidl.srcDir(file("src/main/aidl"))
         }
     }
 
