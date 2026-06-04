@@ -42,7 +42,7 @@ class ClashRuntime(private val context: Context) {
         val tickerChannel = Channel<Unit>()
         val receiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
-                broadcastChannel.offer(intent ?: return)
+                broadcastChannel.trySend(intent ?: return)
             }
         }
         var tickerEnabled: Boolean
@@ -50,7 +50,7 @@ class ClashRuntime(private val context: Context) {
         coroutineScope {
             launch {
                 while (isActive) {
-                    tickerChannel.offer(Unit)
+                    tickerChannel.trySend(Unit)
                     delay(1000)
                 }
             }

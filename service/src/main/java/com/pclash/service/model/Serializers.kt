@@ -7,7 +7,7 @@ import kotlinx.serialization.encoding.*
 
 class UriSerializer : KSerializer<Uri> {
     override val descriptor: SerialDescriptor
-        get() = PrimitiveDescriptor("Uri", PrimitiveKind.STRING)
+        get() = PrimitiveSerialDescriptor("Uri", PrimitiveKind.STRING)
 
     override fun deserialize(decoder: Decoder): Uri {
         return Uri.parse(decoder.decodeString())
