@@ -25,9 +25,8 @@ abstract class BaseSettingFragment : PreferenceFragmentCompat() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val result = super.onCreateView(inflater, container, savedInstanceState)
-
+    ): View {
+        val result = super.onCreateView(inflater, container, savedInstanceState)!!
 
         return result
     }

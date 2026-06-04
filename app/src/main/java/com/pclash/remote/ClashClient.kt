@@ -3,6 +3,7 @@ package com.pclash.remote
 import android.os.RemoteException
 import com.pclash.core.model.General
 import com.pclash.core.model.ProxyGroup
+import com.pclash.core.model.Traffic
 import com.pclash.service.IClashManager
 import com.pclash.service.transact.IStreamCallback
 import com.pclash.service.transact.ParcelableContainer
@@ -41,6 +42,10 @@ class ClashClient(val service: IClashManager) {
 
     suspend fun queryBandwidth(): Long = withContext(Dispatchers.IO) {
         service.queryBandwidth()
+    }
+
+    suspend fun querySpeed(): Traffic = withContext(Dispatchers.IO) {
+        service.querySpeed()
     }
 
     suspend fun setProxyMode(mode: General.Mode) = withContext(Dispatchers.IO) {

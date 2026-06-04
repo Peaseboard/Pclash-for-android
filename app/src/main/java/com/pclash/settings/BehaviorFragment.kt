@@ -24,7 +24,7 @@ class BehaviorFragment : BaseSettingFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        findPreference(KEY_SHOW_TRAFFIC).isEnabled = !Broadcasts.clashRunning
+        findPreference<androidx.preference.Preference>(KEY_SHOW_TRAFFIC)?.isEnabled = !Broadcasts.clashRunning
     }
 
     override val xmlResourceId: Int

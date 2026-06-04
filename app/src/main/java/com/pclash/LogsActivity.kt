@@ -130,7 +130,7 @@ class LogsActivity : BaseActivity() {
                             }
                         }
                     }
-                    Snackbar.make(binding.rootView, R.string.file_exported, Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(binding.root, R.string.file_exported, Snackbar.LENGTH_LONG).show()
                 }
             }
             return

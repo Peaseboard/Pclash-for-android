@@ -20,7 +20,7 @@ class ScrollBinding(
     private var preventSlaveScroll = false
 
     fun sendMasterScrolled() {
-        updateChannel.offer(Unit)
+        updateChannel.trySend(Unit)
     }
 
     fun scrollMaster(token: String) {

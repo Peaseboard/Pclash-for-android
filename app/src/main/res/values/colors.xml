@@ -13,4 +13,9 @@
 
     <color name="ic_launcher_background">#FFFFFF</color>
 
+    <color name="colorError">#B00020</color>
+    <color name="colorAccentService">#1E4376</color>
+    <color name="colorSurface">#FFFFFF</color>
+    <color name="colorOnSurface">#000000</color>
+
 </resources>

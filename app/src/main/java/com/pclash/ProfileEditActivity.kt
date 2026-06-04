@@ -69,7 +69,7 @@ class ProfileEditActivity : BaseActivity() {
                 val interval = fragment.interval
 
                 if (name.isBlank()) {
-                    Snackbar.make(binding.rootView, R.string.empty_name, Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(binding.root, R.string.empty_name, Snackbar.LENGTH_LONG).show()
                     return@setOnClickListener
                 }
 
@@ -87,7 +87,7 @@ class ProfileEditActivity : BaseActivity() {
 
     override fun onBackPressed() {
         if (processing) {
-            Snackbar.make(binding.rootView, R.string.processing, Snackbar.LENGTH_LONG).show()
+            Snackbar.make(binding.root, R.string.processing, Snackbar.LENGTH_LONG).show()
             return
         }
 

@@ -73,7 +73,7 @@ class LogcatService : Service(), CoroutineScope by MainScope(), IInterface {
                     data ?: return
                     data.data ?: return
 
-                    logChannel.offer(data.data as LogEvent)
+                    logChannel.trySend(data.data as LogEvent)
                 }
             })
         }

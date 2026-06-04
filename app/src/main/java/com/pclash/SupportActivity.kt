@@ -106,7 +106,7 @@ class SupportActivity : BaseActivity() {
             }
 
             withContext(Dispatchers.Main) {
-                com.google.android.material.snackbar.Snackbar.make(binding.rootView, R.string.uploaded, com.google.android.material.snackbar.Snackbar.LENGTH_LONG).show()
+                com.google.android.material.snackbar.Snackbar.make(binding.root, R.string.uploaded, com.google.android.material.snackbar.Snackbar.LENGTH_LONG).show()
             }
         }
     }

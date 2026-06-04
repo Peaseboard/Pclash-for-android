@@ -125,7 +125,7 @@ class ProfilesActivity : BaseActivity(), ProfileAdapter.Callback, ProfilesMenu.C
                 EDITOR_REQUEST_CODE
             )
         } catch (e: Exception) {
-            Snackbar.make(binding.rootView, getText(R.string.profile_not_found), Snackbar.LENGTH_LONG)
+            Snackbar.make(binding.root, getText(R.string.profile_not_found), Snackbar.LENGTH_LONG)
                 .show()
         }
     }

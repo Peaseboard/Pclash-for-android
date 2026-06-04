@@ -23,7 +23,7 @@ class NetworkFragment : BaseSettingFragment() {
 
         preferenceScreen.isEnabled = !Broadcasts.clashRunning
 
-        findPreference(KEY_ACCESS_CONTROL_PACKAGES).setOnPreferenceClickListener {
+        findPreference<androidx.preference.Preference>(KEY_ACCESS_CONTROL_PACKAGES)?.setOnPreferenceClickListener {
             startActivity(PackagesActivity::class.intent)
             true
         }

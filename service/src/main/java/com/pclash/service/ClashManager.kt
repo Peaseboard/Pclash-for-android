@@ -3,6 +3,7 @@ package com.pclash.service
 import com.pclash.core.Clash
 import com.pclash.core.model.General
 import com.pclash.core.model.ProxyGroupWrapper
+import com.pclash.core.model.Traffic
 import com.pclash.service.data.ProfileDao
 import com.pclash.service.data.SelectedProxyDao
 import com.pclash.service.data.SelectedProxyEntity
@@ -39,6 +40,10 @@ class ClashManager: IClashManager.Stub() {
         val data = Clash.queryBandwidth()
 
         return data.download + data.upload
+    }
+
+    override fun querySpeed(): Traffic {
+        return Clash.querySpeed()
     }
 
     override fun performHealthCheck(group: String?, callback: IStreamCallback?) {

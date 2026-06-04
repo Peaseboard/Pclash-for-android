@@ -211,7 +211,7 @@ object Remote {
                 false
             }
         } catch (e: Exception) {
-            Log.e("Remote", "Error during APK update check", e)
+            Log.e("Error during APK update check", e)
 
             false
         }
