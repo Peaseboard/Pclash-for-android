@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.ColorInt
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -74,13 +75,8 @@ class ProxyAdapter(
     private val colorOnSurface: Int
 
     init {
-        val typedValue = TypedValue()
-
-        context.theme.resolveAttribute(R.attr.colorSurface, typedValue, true)
-        colorSurface = typedValue.data
-
-        context.theme.resolveAttribute(R.attr.colorOnSurface, typedValue, true)
-        colorOnSurface = typedValue.data
+        colorSurface = ContextCompat.getColor(context, R.color.colorSurface)
+        colorOnSurface = ContextCompat.getColor(context, R.color.colorOnSurface)
     }
 
     val layoutManager = GridLayoutManager(context, DEFAULT_SPAN_COUNT).apply {

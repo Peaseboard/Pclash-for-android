@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.TypedValue
 import android.view.ViewGroup
 import androidx.annotation.ColorInt
+import androidx.core.content.ContextCompat
 import com.pclash.R
 import com.pclash.design.view.CommonUiLayout
 import com.pclash.service.model.Profile
@@ -32,10 +33,7 @@ class ProfilesMenu(
         }
 
         @ColorInt
-        val errorColor = TypedValue().run {
-            context.theme.resolveAttribute(R.attr.colorError, this, true)
-            data
-        }
+        val errorColor = ContextCompat.getColor(context, R.color.colorError)
 
         menu.build {
             if (entity.type != Profile.Type.FILE) {

@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.ColorInt
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.pclash.R
 import com.google.android.material.card.MaterialCardView
@@ -36,10 +37,7 @@ class ProxyChipAdapter(
     private val colorOnSurface: Int
 
     init {
-        val typedValue = TypedValue()
-
-        context.theme.resolveAttribute(R.attr.colorOnSurface, typedValue, true)
-        colorOnSurface = typedValue.data
+        colorOnSurface = ContextCompat.getColor(context, R.color.colorOnSurface)
     }
 
     class Holder(root: View) : RecyclerView.ViewHolder(root) {

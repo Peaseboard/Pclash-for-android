@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import com.pclash.common.utils.intent
 import com.pclash.common.utils.asBytesString
 import com.pclash.common.utils.asSpeedString
@@ -56,19 +57,19 @@ class MainActivity : BaseActivity() {
             startActivity(ProfilesActivity::class.intent)
         }
 
-        binding.logs.setOnClickListener {
+        binding.logs.root.setOnClickListener {
             startActivity(LogsActivity::class.intent)
         }
 
-        binding.settings.setOnClickListener {
+        binding.settings.root.setOnClickListener {
             startActivity(SettingsActivity::class.intent)
         }
 
-        binding.support.setOnClickListener {
+        binding.support.root.setOnClickListener {
             startActivity(SupportActivity::class.intent)
         }
 
-        binding.about.setOnClickListener {
+        binding.about.root.setOnClickListener {
             showAboutDialog()
         }
 

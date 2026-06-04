@@ -8,6 +8,7 @@ import android.util.TypedValue
 import android.view.ViewGroup
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pclash.adapter.LogFileAdapter
@@ -192,10 +193,7 @@ class LogsActivity : BaseActivity() {
         }
 
         @ColorInt
-        val errorColor = TypedValue().run {
-            theme.resolveAttribute(R.attr.colorError, this, true)
-            data
-        }
+        val errorColor = ContextCompat.getColor(this, R.color.colorError)
 
         menu.build {
             option(
