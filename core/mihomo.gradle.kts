@@ -4,7 +4,7 @@ import java.util.*
 import java.net.*
 import java.time.*
 
-val geoipDatabaseUrl = "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.metadb"
+val geoipDatabaseUrl = "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.metadb"
 val geoipInvalidate = Duration.ofDays(7)
 val geoipOutput = layout.buildDirectory.dir("outputs/geoip").get().asFile
 val mihomoVersion = "v1.19.25"

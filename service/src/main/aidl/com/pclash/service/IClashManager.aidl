@@ -1,7 +1,6 @@
 package com.pclash.service;
 
 import com.pclash.service.transact.IStreamCallback;
-import com.pclash.core.model.Packet;
 
 interface IClashManager {
     // Control
