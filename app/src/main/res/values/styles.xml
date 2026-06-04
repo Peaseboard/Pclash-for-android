@@ -5,6 +5,9 @@
         <item name="colorPrimary">@color/colorPrimaryClashBlue</item>
         <item name="colorPrimaryDark">@color/statusBarColor</item>
         <item name="colorSecondary">@color/colorPrimaryClashBlue</item>
+        <item name="colorError">@color/colorError</item>
+        <item name="colorSurface">@color/colorSurface</item>
+        <item name="colorOnSurface">@color/colorOnSurface</item>
         <item name="android:windowBackground">@color/backgroundColor</item>
         <item name="android:windowLightStatusBar">@bool/lightStatusBar</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
