@@ -76,7 +76,11 @@ tasks.register("downloadGeoipDatabase") {
 
     doLast {
         geoipOutput.mkdirs()
-        URL(geoipDatabaseUrl).openConnection().getInputStream().use { input ->
+        println("Downloading GeoIP database...")
+        val connection = URL(geoipDatabaseUrl).openConnection()
+        connection.connectTimeout = 30000 // 30 seconds timeout
+        connection.readTimeout = 30000
+        connection.getInputStream().use { input ->
             FileOutputStream(geoipFile).use { output ->
                 input.copyTo(output)
             }
