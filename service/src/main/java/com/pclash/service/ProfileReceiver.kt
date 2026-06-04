@@ -31,9 +31,8 @@ class ProfileReceiver : BroadcastReceiver() {
     companion object {
         private val initialized = Mutex()
 
-        @Synchronized
         suspend fun initialize(context: Context) {
-            if ( !initialized.tryLock() )
+            if (!initialized.tryLock())
                 return
 
             ProfileDao.queryAllIds().forEach {

@@ -21,9 +21,13 @@ android {
     namespace = "com.pclash.service"
     compileSdk = gCompileSdkVersion
 
+    buildFeatures {
+        aidl = true
+    }
+
     sourceSets {
         getByName("main") {
-            aidl.srcDir(file("src/main/aidl"))
+            aidl.srcDirs("src/main/aidl")
         }
     }
 

@@ -183,9 +183,7 @@ class ProfileService : BaseService() {
             request.receive()
 
             val ctx = lock.withLock {
-                tasks.entries.firstOrNull()?.also {
-                    tasks[it.key]
-                }
+                tasks.entries.firstOrNull()
             } ?: continue
 
             try {
