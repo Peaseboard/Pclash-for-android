@@ -1,6 +1,8 @@
 package com.pclash.service;
 
 import com.pclash.service.transact.IStreamCallback;
+import com.pclash.core.model.ProxyGroupWrapper;
+import com.pclash.core.model.General;
 
 interface IClashManager {
     // Control
