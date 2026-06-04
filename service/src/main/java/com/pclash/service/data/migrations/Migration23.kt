@@ -3,7 +3,6 @@ package com.pclash.service.data.migrations
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
-import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.edit
 import androidx.core.database.getStringOrNull
 import androidx.room.migration.Migration
@@ -40,10 +39,10 @@ object Migration23: Migration(2, 3) {
                             SQLiteDatabase.CONFLICT_ABORT,
                             ContentValues().apply {
                                 put("name", name)
-                                put("type", type)
+                                put("type", type as Int)
                                 put("uri", uri)
                                 put("source", source)
-                                put("active", active)
+                                put("active", active as Int)
                                 put("interval", interval * 1000)
                                 put("id", id)
                             })
@@ -65,7 +64,7 @@ object Migration23: Migration(2, 3) {
                         database.insert("selected_proxies",
                             SQLiteDatabase.CONFLICT_REPLACE,
                             ContentValues().apply {
-                                put("profile_id", profileId)
+                                put("profile_id", profileId as Long)
                                 put("proxy", proxy)
                                 put("selected", selected)
                             })
@@ -82,14 +81,11 @@ object Migration23: Migration(2, 3) {
             val srvSp = Global.application
                 .getSharedPreferences("service", Context.MODE_PRIVATE)
 
-            srvSp.edit {
-                putBoolean("enable_vpn", uiSp.getBoolean("enable_vpn", true))
-            }
+            srvSp.edit().putBoolean("enable_vpn", uiSp.getBoolean("enable_vpn", true)).apply()
 
-            NotificationManagerCompat.from(Global.application).apply {
-                deleteNotificationChannel("profile_service_status")
-                deleteNotificationChannel("profile_service_result")
-            }
+            val notificationManager = Global.application.getSystemService(Context.NOTIFICATION_SERVICE) as android.app.NotificationManager
+            runCatching { notificationManager.deleteNotificationChannel("profile_service_status") }
+            runCatching { notificationManager.deleteNotificationChannel("profile_service_result") }
 
             Log.i("Database Migrated 2 -> 3")
         } catch (e: Exception) {

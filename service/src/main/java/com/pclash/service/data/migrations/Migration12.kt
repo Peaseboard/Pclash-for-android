@@ -114,9 +114,7 @@ object Migration12: Migration(1, 2) {
         val bypassPrivate = oldSettings
             .getBoolean("key_bypass_private_network", true)
 
-        oldSettings.edit {
-            clear()
-        }
+        oldSettings.edit().clear().apply()
 
         newSettings.commit {
             val newAccessMode = when (accessMode) {

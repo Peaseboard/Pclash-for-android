@@ -89,8 +89,8 @@ object Migration34: Migration(3, 4) {
                     put("name", it.name)
                     put("type", it.type)
                     put("uri", it.uri)
-                    put("source", it.source)
-                    put("active", it.active)
+                    if (it.source != null) put("source", it.source) else putNull("source")
+                    put("active", if (it.active) 1 else 0)
                     put("interval", it.interval)
                     put("id", it.id)
                 })
@@ -99,7 +99,7 @@ object Migration34: Migration(3, 4) {
             selectedProxies.forEach {
                 database.insert("selected_proxies",
                     SQLiteDatabase.CONFLICT_REPLACE, ContentValues().apply {
-                    put("profile_id", it.profileId)
+                    put("profile_id", it.profileId as Long)
                     put("proxy", it.proxy)
                     put("selected", it.selected)
                 })

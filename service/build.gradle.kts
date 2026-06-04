@@ -62,6 +62,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:$gKotlinCoroutineVersion")
     implementation("androidx.room:room-runtime:$gRoomVersion")
     implementation("androidx.room:room-ktx:$gRoomVersion")
+    implementation("androidx.sqlite:sqlite:2.4.0")
     implementation("androidx.core:core-ktx:$gAndroidKtxVersion")
     implementation("dev.rikka.rikkax.preference:multiprocess:1.0.0")
 }
