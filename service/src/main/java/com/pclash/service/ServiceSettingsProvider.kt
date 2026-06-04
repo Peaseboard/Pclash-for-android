@@ -2,8 +2,8 @@ package com.pclash.service
 
 import android.content.Context
 import android.content.SharedPreferences
-import dev.rikka.rikkax.multiprocess.MultiProcessSharedPreferences
-import dev.rikka.rikkax.multiprocess.PreferenceProvider
+import rikka.preference.MultiProcessPreference
+import rikka.preference.PreferenceProvider
 
 class ServiceSettingsProvider : PreferenceProvider() {
     override fun onCreatePreference(context: Context?): SharedPreferences {
@@ -22,7 +22,7 @@ class ServiceSettingsProvider : PreferenceProvider() {
                         Context.MODE_PRIVATE
                     )
                 else ->
-                    MultiProcessSharedPreferences(
+                    MultiProcessPreference(
                         context,
                         context.packageName + Constants.SETTING_PROVIDER_SUFFIX
                     )
