@@ -21,6 +21,12 @@ android {
     namespace = "com.pclash.service"
     compileSdk = gCompileSdkVersion
 
+    sourceSets {
+        main {
+            aidl.srcDirs("src/main/aidl")
+        }
+    }
+
     defaultConfig {
         minSdk = gMinSdkVersion
         consumerProguardFiles("consumer-rules.pro")

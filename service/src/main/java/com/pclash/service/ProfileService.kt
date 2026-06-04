@@ -39,7 +39,7 @@ class ProfileService : BaseService() {
                     lock.withLock {
                         tasks[id] = callback
 
-                        request.offer(Unit)
+                        request.trySend(Unit)
                     }
                 }
             }
@@ -206,7 +206,7 @@ class ProfileService : BaseService() {
                 }
             }
 
-            request.offer(Unit)
+            request.trySend(Unit)
         }
     }
 

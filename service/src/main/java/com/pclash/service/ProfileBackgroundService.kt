@@ -68,7 +68,7 @@ class ProfileBackgroundService : BaseService() {
                 val id = intent.data?.schemeSpecificPart?.toLongOrNull()
                     ?: return START_NOT_STICKY
 
-                requests.offer(id)
+                requests.trySend(id)
             }
         }
 
@@ -92,11 +92,11 @@ class ProfileBackgroundService : BaseService() {
 
                     service.commit(it, object : IStreamCallback.Stub() {
                         override fun completeExceptionally(reason: String?) {
-                            responses.offer(it to RemoteException(reason))
+                            responses.trySend(it to RemoteException(reason))
                         }
 
                         override fun complete() {
-                            responses.offer(it to null)
+                            responses.trySend(it to null)
                         }
 
                         override fun send(data: ParcelableContainer?) {}
