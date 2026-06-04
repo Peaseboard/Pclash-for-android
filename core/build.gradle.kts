@@ -30,6 +30,16 @@ android {
         minSdk = gMinSdkVersion
         consumerProguardFiles("consumer-rules.pro")
         buildConfigField("String", "VERSION_NAME", "\"${gVersionName}\"")
+
+        externalNativeBuild {
+            cmake {
+                cppFlags("-std=c++17")
+                arguments("-DCLASH_OUTPUT=${projectDir}/src/main/jniLibs", "-DCLASH_SOURCE=${projectDir}/src/main/cpp")
+            }
+        }
+        ndk {
+            abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86", "x86_64")
+        }
     }
 
     buildTypes {
@@ -60,6 +70,12 @@ android {
     buildFeatures {
         buildConfig = true
         aidl = true
+    }
+
+    externalNativeBuild {
+        cmake {
+            path = file("src/main/cpp/CMakeLists.txt")
+        }
     }
 }
 
