@@ -100,6 +100,12 @@ android {
     }
 }
 
+// Generate PACKAGE_NAME_BASE64 at configuration time
+val packageNameBase64 = Base64.getEncoder().encodeToString("com.pclash".toByteArray(Charsets.UTF_8))
+android.buildTypes.forEach {
+    it.buildConfigField("String", "PACKAGE_NAME_BASE64", "\"$packageNameBase64\"")
+}
+
 dependencies {
     implementation(project(":core"))
     implementation(project(":service"))
@@ -113,18 +119,4 @@ dependencies {
     implementation("com.google.android.material:material:$gMaterialDesignVersion")
 
     implementation("androidx.preference:preference-ktx:1.2.1")
-}
-
-tasks.register("injectPackageNameBase64") {
-    doFirst {
-        val packageName = "com.pclash"
-        val base64 = Base64.getEncoder().encodeToString(packageName.toByteArray(Charsets.UTF_8))
-        android.buildTypes.forEach {
-            it.buildConfigField("String", "PACKAGE_NAME_BASE64", "\"$base64\"")
-        }
-    }
-}
-
-tasks.named("preBuild") {
-    dependsOn("injectPackageNameBase64")
 }
