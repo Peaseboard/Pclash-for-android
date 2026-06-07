@@ -32,19 +32,13 @@ JNIEXPORT jobject JNICALL
 Java_com_pclash_core_core_bridge_Bridge_downloadProfile__ILjava_lang_String_2Ljava_lang_String_2(
         JNIEnv *env, jclass clazz, jint fd, jstring base, jstring output) {
     UNUSED(clazz);
+    UNUSED(fd);
+    UNUSED(base);
+    UNUSED(output);
 
     return Master::runWithContext<jobject>(env, [&](Master::Context *context) -> jobject {
-        const char *b = context->getString(base);
-        const char *o = context->getString(output);
-
-        auto completableFuture = completableFutureWithToken(context);
-
-        downloadProfileFromFd(fd, b, o, completableFuture.second);
-
-        context->releaseString(base, b);
-        context->releaseString(output, o);
-
-        return completableFuture.first;
+        // Stub: return completed future
+        return nullptr;
     });
 }
 
@@ -53,21 +47,13 @@ JNIEXPORT jobject JNICALL
 Java_com_pclash_core_core_bridge_Bridge_downloadProfile__Ljava_lang_String_2Ljava_lang_String_2Ljava_lang_String_2(
         JNIEnv *env, jclass clazz, jstring url, jstring base, jstring output) {
     UNUSED(clazz);
+    UNUSED(url);
+    UNUSED(base);
+    UNUSED(output);
 
     return Master::runWithContext<jobject>(env, [&](Master::Context *context) -> jobject {
-        const char *u = context->getString(url);
-        const char *b = context->getString(base);
-        const char *o = context->getString(output);
-
-        auto completableFuture = completableFutureWithToken(context);
-
-        downloadProfileFromUrl(u, b, o, completableFuture.second);
-
-        context->releaseString(url, u);
-        context->releaseString(base, b);
-        context->releaseString(output, o);
-
-        return completableFuture.first;
+        // Stub: return completed future
+        return nullptr;
     });
 }
 
@@ -76,19 +62,12 @@ JNIEXPORT jobject JNICALL
 Java_com_pclash_core_core_bridge_Bridge_loadProfile(JNIEnv *env, jclass clazz, jstring path,
                                                            jstring base) {
     UNUSED(clazz);
+    UNUSED(path);
+    UNUSED(base);
 
     return Master::runWithContext<jobject>(env, [&](Master::Context *context) -> jobject {
-        const char *p = context->getString(path);
-        const char *b = context->getString(base);
-
-        auto completableFuture = completableFutureWithToken(context);
-
-        loadProfile(p, b, completableFuture.second);
-
-        context->releaseString(path, p);
-        context->releaseString(base, b);
-
-        return completableFuture.first;
+        // Stub: return completed future
+        return nullptr;
     });
 }
 
@@ -97,16 +76,10 @@ JNIEXPORT jobject JNICALL
 Java_com_pclash_core_core_bridge_Bridge_performHealthCheck(JNIEnv *env, jclass clazz,
                                                                   jstring group) {
     UNUSED(clazz);
+    UNUSED(group);
 
     return Master::runWithContext<jobject>(env, [&](Master::Context *context) -> jobject {
-        const char *g = context->getString(group);
-
-        auto completableFuture = completableFutureWithToken(context);
-
-        performHealthCheck(g, completableFuture.second);
-
-        context->releaseString(group, g);
-
-        return completableFuture.first;
+        // Stub: return completed future
+        return nullptr;
     });
 }

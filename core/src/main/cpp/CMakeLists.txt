@@ -8,4 +8,4 @@ include_directories(${CLASH_OUTPUT}/${ANDROID_ABI} ${CLASH_SOURCE} ${CLASH_SOURC
 link_directories(${CLASH_OUTPUT}/${CMAKE_ANDROID_ARCH_ABI})
 link_libraries(log mihomo)
 
-add_library(bridge SHARED main.cpp main.h init.cpp query.cpp patch.cpp tun.cpp defer.cpp log.cpp event_queue.cpp)
+add_library(bridge SHARED main.cpp main.h init.cpp query.cpp patch.cpp tun.cpp defer.cpp log.cpp event_queue.cpp stubs.cpp)

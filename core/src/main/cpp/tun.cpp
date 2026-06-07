@@ -44,7 +44,7 @@ Java_com_pclash_core_core_bridge_Bridge_startTunDevice(JNIEnv *env, jclass clazz
             });
         });
 
-        char *exception = startTunDevice(fd, mtu, gatewayString, mirrorString, dnsString, token);
+        char *exception = startTunDevice(fd, mtu, gatewayString, mirrorString, dnsString, std::to_string(token).c_str());
 
         context->releaseString(gateway, gatewayString);
         context->releaseString(mirror, mirrorString);

@@ -8,20 +8,8 @@ Java_com_pclash_core_core_bridge_Bridge_setProxyMode(JNIEnv *env, jclass clazz,
                                                             jstring proxy_mode) {
     Master::runWithContext<void>(env, [&](Master::Context *context) {
         const char *m = context->getString(proxy_mode);
-        int mode;
 
-        if ( strcmp(m, "Direct") == 0 )
-            mode = MODE_DIRECT;
-        else if ( strcmp(m, "Global") == 0 )
-            mode = MODE_GLOBAL;
-        else if ( strcmp(m, "Rule") == 0 )
-            mode = MODE_RULE;
-        else if ( strcmp(m, "Script") == 0 )
-            mode = MODE_SCRIPT;
-        else
-            mode = MODE_UNKNOWN;
-
-        setProxyMode(mode);
+        setProxyMode(m);
     });
 }
 
@@ -32,19 +20,12 @@ Java_com_pclash_core_core_bridge_Bridge_setDnsOverride(JNIEnv *env, jclass clazz
                                                               jstring append_dns) {
     Master::runWithContext<void>(env, [&](Master::Context *context) {
         const char *appendDns = context->getString(append_dns);
-        int override = 1;
+        int override = override_dns ? 1 : 0;
 
-        if ( override_dns )
-            override = 1;
-        else
-            override = 0;
+        // Build JSON string for Go function
+        std::string dnsJson = "{\"override_dns\":" + std::to_string(override) + ",\"append_dns\":\"" + std::string(appendDns) + "\"}";
 
-        dns_override_t dns = {
-                .override_dns = override,
-                .append_dns = appendDns
-        };
-
-        setDnsOverride(&dns);
+        setDnsOverride(dnsJson.c_str());
 
         context->releaseString(append_dns, appendDns);
     });
